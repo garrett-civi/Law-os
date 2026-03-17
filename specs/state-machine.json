@@ -1,0 +1,643 @@
+{
+  "machine_name": "canonical_legal_state_machine",
+  "version": "1.0",
+  "description": "Transition-oriented state machine for coercive action, adjudication, review, judgment, and enforcement.",
+  "state_types": {
+    "constructive": "creates an institutional artifact and requires instantiation at the construction point",
+    "constraint": "limits, validates, invalidates, or conditions downstream use without creating an artifact",
+    "state_flip": "changes system status without creating a standalone institutional artifact",
+    "mixed": "can produce both constraint effects and downstream constructive consequences",
+    "world": "world-level event or state change outside institutional instantiation",
+    "trigger": "initiates a processing lane without creating a legal artifact"
+  },
+  "global_rules": [
+    "Not every USE_reasoning step leads to USAGE.",
+    "If output_type is constructive, an institutional artifact must be created at the instantiation point.",
+    "If output_type is constraint, no USAGE step is required for that output.",
+    "Z_2 and Z_3 require prior instantiated artifacts as inputs.",
+    "Z_1 is a direct constraint output and does not require USAGE.",
+    "L is a state_flip and does not create a standalone institutional artifact.",
+    "ZZ is mixed and may branch into both constraint and constructive consequences."
+  ],
+  "paths": {
+    "path_1_coercive": {
+      "name": "Coercive Action Flow",
+      "initial_state": "P1-S0",
+      "states": {
+        "P1-S0": {
+          "id": "P1-S0",
+          "name": "World Facts Exist",
+          "layer": "world",
+          "entry_operator": "O_P_R",
+          "operator_type": "world_observation",
+          "output_type": "world",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "real_world_events",
+            "observable_conditions"
+          ],
+          "outputs": [
+            "recorded_facts"
+          ],
+          "transitions": {
+            "recorded_facts_available": "P1-S1"
+          }
+        },
+        "P1-S1": {
+          "id": "P1-S1",
+          "name": "Actionable Allegation Ready",
+          "layer": "system_entry",
+          "entry_operator": "A_a",
+          "operator_type": "trigger",
+          "output_type": "trigger",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "recorded_facts"
+          ],
+          "validation_rules": [
+            "sworn_or_attested_facts",
+            "particularity",
+            "credibility",
+            "probable_cause_sufficiency"
+          ],
+          "outputs": [
+            "actionable_allegation"
+          ],
+          "transitions": {
+            "trigger_sufficient": "P1-S2",
+            "trigger_insufficient": "P1-FAIL-A_a"
+          }
+        },
+        "P1-S2": {
+          "id": "P1-S2",
+          "name": "Coercive Authority Authorized",
+          "layer": "system",
+          "entry_operator": "W_0",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "actionable_allegation"
+          ],
+          "outputs": [
+            "coercive_authority"
+          ],
+          "transitions": {
+            "authorized": "P1-S3",
+            "denied": "P1-FAIL-W_0"
+          }
+        },
+        "P1-S3": {
+          "id": "P1-S3",
+          "name": "Coercive Authority Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_1",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "required_inputs": [
+            "coercive_authority"
+          ],
+          "outputs": [
+            "warrant_record",
+            "detention_order_record",
+            "coercive_instrument_record"
+          ],
+          "transitions": {
+            "instantiated": "P1-S4"
+          }
+        },
+        "P1-S4": {
+          "id": "P1-S4",
+          "name": "Coercive Execution Completed",
+          "layer": "execution_world",
+          "entry_operator": "USE_world",
+          "operator_type": "execution",
+          "output_type": "world",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "warrant_record",
+            "detention_order_record",
+            "coercive_instrument_record"
+          ],
+          "outputs": [
+            "world_altered_state",
+            "seized_evidence",
+            "custody_change",
+            "liberty_restriction"
+          ],
+          "transitions": {
+            "execution_complete": "P1-S5",
+            "facts_reusable_for_adjudication": "P2-S0"
+          }
+        },
+        "P1-S5": {
+          "id": "P1-S5",
+          "name": "Execution Challenge Triggered",
+          "layer": "system_entry",
+          "entry_operator": "A_e",
+          "operator_type": "trigger",
+          "output_type": "trigger",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "record_of_execution",
+            "execution_facts"
+          ],
+          "validation_rules": [
+            "identifiable_execution_conduct",
+            "alleged_scope_or_force_or_procedure_defect",
+            "sufficient_factual_basis_for_review"
+          ],
+          "outputs": [
+            "execution_challenge"
+          ],
+          "transitions": {
+            "challenge_to_entry_lane": "P2-S1",
+            "challenge_to_z1_lane": "P2-S2"
+          }
+        }
+      },
+      "failure_states": {
+        "P1-FAIL-A_a": {
+          "id": "P1-FAIL-A_a",
+          "name": "Insufficient Actionable Allegation",
+          "result": "no_coercive_authorization",
+          "terminal": true
+        },
+        "P1-FAIL-W_0": {
+          "id": "P1-FAIL-W_0",
+          "name": "Coercive Authorization Denied",
+          "result": "no_warrant_no_force",
+          "terminal": true
+        }
+      }
+    },
+    "path_2_adjudicative": {
+      "name": "Adjudicative and Enforcement Flow",
+      "initial_state": "P2-S0",
+      "states": {
+        "P2-S0": {
+          "id": "P2-S0",
+          "name": "Recorded Facts Available",
+          "layer": "world_to_system_input",
+          "entry_operator": "O_P_R",
+          "operator_type": "world_observation",
+          "output_type": "world",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "real_world_events",
+            "observable_conditions"
+          ],
+          "outputs": [
+            "recorded_facts"
+          ],
+          "transitions": {
+            "facts_ready_for_entry": "P2-S1"
+          }
+        },
+        "P2-S1": {
+          "id": "P2-S1",
+          "name": "Legally Cognizable Facts",
+          "layer": "recognition_interface",
+          "entry_operator": "L",
+          "operator_type": "recognition",
+          "output_type": "state_flip",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "recorded_facts"
+          ],
+          "implementation_mode": "USE_reasoning_plausibility",
+          "validation_rules": [
+            "non_conclusory_factuality",
+            "doctrinal_operativity",
+            "element_anchoring",
+            "reasonable_inference_of_liability",
+            "speculation_boundary",
+            "public_record_integration",
+            "basic_coherence_checks"
+          ],
+          "outputs": [
+            "legally_cognizable_facts"
+          ],
+          "transitions": {
+            "entry_granted": "P2-S3",
+            "coercive_legality_must_be_resolved_first": "P2-S2",
+            "entry_denied": "P2-FAIL-L"
+          }
+        },
+        "P2-S2": {
+          "id": "P2-S2",
+          "name": "Coercive Use Legality Determined",
+          "layer": "system_entry_adjudication",
+          "entry_operator": "Z_1",
+          "operator_type": "evaluation",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "execution_challenge",
+            "execution_facts",
+            "coercive_authority_record"
+          ],
+          "implementation_mode": "USE_reasoning_coercive_legitimacy",
+          "validation_rules": [
+            "warrant_or_exception_validity",
+            "scope_compliance",
+            "procedural_regularity",
+            "admissibility_consequences",
+            "no_excessive_force",
+            "no_abusive_execution",
+            "no_bad_faith_expansion_beyond_authorization"
+          ],
+          "outputs": [
+            "coercive_use_lawful_or_unlawful",
+            "evidence_admissible_or_suppressed"
+          ],
+          "transitions": {
+            "lawful_or_suppressed_then_continue": "P2-S3",
+            "terminated": "P2-FAIL-Z_1"
+          }
+        },
+        "P2-S3": {
+          "id": "P2-S3",
+          "name": "Verdict Reasoning Space Open",
+          "layer": "system",
+          "entry_operator": "W_1",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "legally_cognizable_facts",
+            "admissible_evidence"
+          ],
+          "outputs": [
+            "verdict_reasoning_space"
+          ],
+          "transitions": {
+            "reasoning_authorized": "P2-S4"
+          }
+        },
+        "P2-S4": {
+          "id": "P2-S4",
+          "name": "Verdict Candidate Produced",
+          "layer": "system",
+          "entry_operator": "USE_reasoning_verdict",
+          "operator_type": "reasoning",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "verdict_reasoning_space",
+            "legally_cognizable_facts",
+            "admissible_evidence"
+          ],
+          "validation_rules": [
+            "evidence_evaluation",
+            "circumstantial_inference",
+            "relation_strength_testing",
+            "element_satisfaction",
+            "legal_classification",
+            "doctrinal_interpretation",
+            "temporal_coherence",
+            "structural_plausibility",
+            "behavioral_plausibility",
+            "pattern_stability",
+            "contradiction_avoidance"
+          ],
+          "outputs": [
+            "verdict_candidate",
+            "liability_candidate"
+          ],
+          "transitions": {
+            "candidate_produced": "P2-S5"
+          }
+        },
+        "P2-S5": {
+          "id": "P2-S5",
+          "name": "Verdict Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_verdict",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "required_inputs": [
+            "verdict_candidate",
+            "liability_candidate"
+          ],
+          "outputs": [
+            "verdict_record",
+            "liability_record"
+          ],
+          "transitions": {
+            "verdict_record_created": "P2-S6"
+          }
+        },
+        "P2-S6": {
+          "id": "P2-S6",
+          "name": "Liability Validated",
+          "layer": "system",
+          "entry_operator": "Z_2",
+          "operator_type": "evaluation",
+          "output_type": "constraint",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "verdict_record",
+            "liability_record"
+          ],
+          "implementation_mode": "audit",
+          "validation_rules": [
+            "evidentiary_regime_integrity",
+            "record_support",
+            "reasonable_inference_vs_speculation",
+            "doctrinal_coherence",
+            "nondistortion_of_operative_evidentiary_regime",
+            "materially_consequential_support",
+            "exclusion_of_bad_faith_manipulation",
+            "absence_of_intentional_distortion_or_fabrication"
+          ],
+          "outputs": [
+            "validated_liability",
+            "invalidated_liability"
+          ],
+          "transitions": {
+            "validated": "P2-S7",
+            "invalidated": "P2-FAIL-Z_2"
+          }
+        },
+        "P2-S7": {
+          "id": "P2-S7",
+          "name": "Remedy Reasoning Space Open",
+          "layer": "system",
+          "entry_operator": "W_2",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "validated_liability"
+          ],
+          "outputs": [
+            "remedy_reasoning_space"
+          ],
+          "transitions": {
+            "reasoning_authorized": "P2-S8"
+          }
+        },
+        "P2-S8": {
+          "id": "P2-S8",
+          "name": "Remedy Candidate Produced",
+          "layer": "system",
+          "entry_operator": "USE_reasoning_remedy",
+          "operator_type": "reasoning",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "remedy_reasoning_space",
+            "validated_liability",
+            "case_facts"
+          ],
+          "validation_rules": [
+            "damage_measurement",
+            "statutory_multipliers",
+            "restitution_calculation",
+            "remedy_device_fit",
+            "scope_specification"
+          ],
+          "outputs": [
+            "remedy_candidate"
+          ],
+          "transitions": {
+            "candidate_produced": "P2-S9"
+          }
+        },
+        "P2-S9": {
+          "id": "P2-S9",
+          "name": "Remedy Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_remedy",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "required_inputs": [
+            "remedy_candidate"
+          ],
+          "outputs": [
+            "remedy_record"
+          ],
+          "transitions": {
+            "remedy_record_created": "P2-S10"
+          }
+        },
+        "P2-S10": {
+          "id": "P2-S10",
+          "name": "Final Judgment Entered",
+          "layer": "system",
+          "entry_operator": "USAGE_judgment",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": true,
+          "required_inputs": [
+            "verdict_record",
+            "remedy_record",
+            "legal_conversion_rules"
+          ],
+          "outputs": [
+            "final_judgment"
+          ],
+          "transitions": {
+            "judgment_ready_for_outcome_review": "P2-S11",
+            "judgment_ready_for_appellate_review": "P2-S12"
+          }
+        },
+        "P2-S11": {
+          "id": "P2-S11",
+          "name": "Outcome Reviewed",
+          "layer": "system",
+          "entry_operator": "Z_3",
+          "operator_type": "evaluation",
+          "output_type": "constraint",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "final_judgment"
+          ],
+          "implementation_mode": "audit",
+          "validation_rules": [
+            "proportionality_of_remedy",
+            "fairness_of_burden_imposed",
+            "equitable_balance_between_parties",
+            "avoidance_of_over_or_under_compensation",
+            "remedy_within_legal_authority",
+            "procedural_correctness",
+            "consistency_with_statutory_and_doctrinal_limits",
+            "proper_scope_and_enforceability"
+          ],
+          "outputs": [
+            "validated_judgment",
+            "modified_judgment"
+          ],
+          "transitions": {
+            "continue_to_appellate": "P2-S12",
+            "continue_to_enforcement": "P2-S13",
+            "modified_judgment_continues": "P2-S13"
+          }
+        },
+        "P2-S12": {
+          "id": "P2-S12",
+          "name": "Appellate / Supervisory Review Completed",
+          "layer": "system",
+          "entry_operator": "ZZ",
+          "operator_type": "meta_reasoning",
+          "output_type": "mixed",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "recognition_record",
+            "verdict_record",
+            "remedy_record",
+            "final_judgment",
+            "prior_Z_outputs"
+          ],
+          "validation_rules": [
+            "correct_application_of_law",
+            "adherence_to_procedural_rules",
+            "doctrinal_validity",
+            "institutional_legitimacy",
+            "abuse_of_discretion_review",
+            "correction_of_legally_cognizable_extreme_unfairness"
+          ],
+          "outputs": [
+            "affirmed",
+            "reversed",
+            "remanded",
+            "modified"
+          ],
+          "transitions": {
+            "affirmed": "P2-S13",
+            "reversed": "P2-FAIL-ZZ-REVERSAL",
+            "remanded": "P2-FAIL-ZZ-REMAND",
+            "modified": "P2-S13"
+          }
+        },
+        "P2-S13": {
+          "id": "P2-S13",
+          "name": "Enforcement Authorized",
+          "layer": "system",
+          "entry_operator": "W_e",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "final_or_affirmed_judgment"
+          ],
+          "outputs": [
+            "authority_to_enforce"
+          ],
+          "transitions": {
+            "authorized": "P2-S14"
+          }
+        },
+        "P2-S14": {
+          "id": "P2-S14",
+          "name": "Enforcement Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_e",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "required_inputs": [
+            "authority_to_enforce"
+          ],
+          "outputs": [
+            "writ_record",
+            "enforcement_record"
+          ],
+          "transitions": {
+            "instantiated": "P2-S15"
+          }
+        },
+        "P2-S15": {
+          "id": "P2-S15",
+          "name": "Judgment Executed",
+          "layer": "execution_world",
+          "entry_operator": "USE_world",
+          "operator_type": "execution",
+          "output_type": "world",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "required_inputs": [
+            "writ_record",
+            "enforcement_record"
+          ],
+          "outputs": [
+            "world_altered_state",
+            "property_transferred",
+            "custody_changed",
+            "injunction_enforced",
+            "funds_seized"
+          ],
+          "transitions": {
+            "challenge_execution": "P1-S5",
+            "terminate": "P2-TERMINAL"
+          }
+        }
+      },
+      "failure_states": {
+        "P2-FAIL-L": {
+          "id": "P2-FAIL-L",
+          "name": "No Legal Entry",
+          "result": "dismissal_or_non_entry",
+          "terminal": true
+        },
+        "P2-FAIL-Z_1": {
+          "id": "P2-FAIL-Z_1",
+          "name": "Coercive Use Unlawful",
+          "result": "suppression_or_exclusion_or_termination",
+          "terminal": true
+        },
+        "P2-FAIL-Z_2": {
+          "id": "P2-FAIL-Z_2",
+          "name": "Liability Reasoning Invalidated",
+          "result": "new_trial_reversal_jmol_like_invalidation",
+          "terminal": true
+        },
+        "P2-FAIL-ZZ-REMAND": {
+          "id": "P2-FAIL-ZZ-REMAND",
+          "name": "Remand Ordered",
+          "result": "return_to_lower_stage_for_further_proceedings",
+          "terminal": true
+        },
+        "P2-FAIL-ZZ-REVERSAL": {
+          "id": "P2-FAIL-ZZ-REVERSAL",
+          "name": "Reversal Ordered",
+          "result": "judgment_not_enforceable",
+          "terminal": true
+        }
+      },
+      "terminal_states": {
+        "P2-TERMINAL": {
+          "id": "P2-TERMINAL",
+          "name": "Unchallenged Execution Complete",
+          "result": "system_cycle_complete",
+          "terminal": true
+        }
+      }
+    }
+  }
+}
