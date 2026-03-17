@@ -1,0 +1,1041 @@
+openapi: 3.1.0
+info:
+  title: Canonical Legal Operator API
+  version: 1.1.0
+  summary: Operator-based legal state machine for coercive action, adjudication, judgment, review, and enforcement.
+  description: >
+    This API models law as a structured operator system:
+    triggers (A), recognition (L), authorizations (W), reasoning (USE),
+    institutional instantiation (USAGE), and evaluation (Z).
+
+    Updated invariant:
+    Not every USE_reasoning step leads to USAGE.
+
+    Constructive outputs create artifacts and require USAGE.
+    Constraint outputs do not create artifacts and do not require USAGE.
+    L is modeled as a state flip at entry.
+    Z_1 is a direct constraint output.
+    Z_2 and Z_3 are audits of prior instantiated artifacts.
+    ZZ is mixed-output review logic.
+
+servers:
+  - url: https://api.example.com
+
+tags:
+  - name: Path 1
+    description: Coercive action flow
+  - name: Path 2
+    description: Adjudicative flow
+  - name: Review
+    description: Legitimacy and appellate review
+  - name: Enforcement
+    description: Post-judgment enforcement
+
+paths:
+  /world/record:
+    post:
+      tags: [Path 1, Path 2]
+      summary: Create recorded world facts
+      operationId: createRecordedFacts
+      x-operator-name: O_P_R
+      x-operator-type: world_observation
+      x-output-type: world
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Creates recorded facts that may feed A_a or L.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordedFactsRequest'
+      responses:
+        '200':
+          description: Recorded facts created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordedFactsResponse'
+
+  /path1/actionable-allegations:
+    post:
+      tags: [Path 1]
+      summary: Transform recorded facts into actionable allegations (A_a)
+      operationId: createActionableAllegation
+      x-operator-name: A_a
+      x-operator-type: trigger
+      x-output-type: trigger
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Enables coercive authorization review by W_0.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionableAllegationRequest'
+      responses:
+        '200':
+          description: Actionable allegation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionableAllegationResponse'
+        '422':
+          description: Insufficient actionable allegation
+
+  /path1/coercive-authorization:
+    post:
+      tags: [Path 1]
+      summary: Authorize coercive state action (W_0)
+      operationId: authorizeCoerciveAction
+      x-operator-name: W_0
+      x-operator-type: authorization
+      x-output-type: constraint
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Permits coercive authority to be instantiated at USAGE_1.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoerciveAuthorizationRequest'
+      responses:
+        '200':
+          description: Coercive authority authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoerciveAuthorizationResponse'
+        '403':
+          description: Coercive authority denied
+
+  /path1/coercive-instantiation:
+    post:
+      tags: [Path 1]
+      summary: Instantiate coercive authority in institutional record (USAGE_1)
+      operationId: instantiateCoerciveAuthority
+      x-operator-name: USAGE_1
+      x-operator-type: instantiation
+      x-output-type: constructive
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: true
+      x-downstream-effect: Creates the institutional artifact required for coercive execution.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoerciveInstantiationRequest'
+      responses:
+        '200':
+          description: Coercive authority instantiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoerciveInstantiationResponse'
+
+  /path1/execute:
+    post:
+      tags: [Path 1]
+      summary: Execute coercive authority in the world (USE_world)
+      operationId: executeCoerciveAuthority
+      x-operator-name: USE_world
+      x-operator-type: execution
+      x-output-type: world
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Produces world changes and records that may become evidentiary inputs or trigger challenge.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorldExecutionRequest'
+      responses:
+        '200':
+          description: Coercive action executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorldExecutionResponse'
+
+  /path2/legal-entry:
+    post:
+      tags: [Path 2]
+      summary: Pass recorded facts through legal entry / plausibility (L)
+      operationId: legalEntry
+      x-operator-name: L
+      x-operator-type: recognition
+      x-output-type: state_flip
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-implementation-mode: USE_reasoning_plausibility
+      x-downstream-effect: Changes system status from recorded facts to legally cognizable facts without creating a standalone institutional artifact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegalEntryRequest'
+      responses:
+        '200':
+          description: Facts became legally cognizable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegalEntryResponse'
+        '422':
+          description: No legal entry
+
+  /path2/coercive-use-review:
+    post:
+      tags: [Path 2, Review]
+      summary: Review legality of coercive use (Z_1)
+      operationId: reviewCoerciveUseLegality
+      x-operator-name: Z_1
+      x-operator-type: evaluation
+      x-output-type: constraint
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-implementation-mode: USE_reasoning_coercive_legitimacy
+      x-downstream-effect: Limits admissibility and usable evidence without creating a standalone institutional artifact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Z1ReviewRequest'
+      responses:
+        '200':
+          description: Coercive use reviewed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Z1ReviewResponse'
+
+  /path2/verdict-authorization:
+    post:
+      tags: [Path 2]
+      summary: Open adjudicative reasoning space (W_1)
+      operationId: authorizeVerdictReasoning
+      x-operator-name: W_1
+      x-operator-type: authorization
+      x-output-type: constraint
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Permits full adjudicative reasoning to proceed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerdictAuthorizationRequest'
+      responses:
+        '200':
+          description: Verdict reasoning space authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerdictAuthorizationResponse'
+
+  /path2/verdict-reasoning:
+    post:
+      tags: [Path 2]
+      summary: Produce verdict candidate through fact-law reasoning (USE_reasoning_verdict)
+      operationId: reasonVerdict
+      x-operator-name: USE_reasoning_verdict
+      x-operator-type: reasoning
+      x-output-type: constructive
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Produces a constructive candidate that must be instantiated at USAGE_verdict.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerdictReasoningRequest'
+      responses:
+        '200':
+          description: Verdict candidate produced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerdictReasoningResponse'
+
+  /path2/verdict-instantiation:
+    post:
+      tags: [Path 2]
+      summary: Instantiate verdict in institutional record (USAGE_verdict)
+      operationId: instantiateVerdict
+      x-operator-name: USAGE_verdict
+      x-operator-type: instantiation
+      x-output-type: constructive
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: true
+      x-downstream-effect: Creates verdict record for Z_2 audit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerdictInstantiationRequest'
+      responses:
+        '200':
+          description: Verdict instantiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerdictInstantiationResponse'
+
+  /path2/z2-review:
+    post:
+      tags: [Path 2, Review]
+      summary: Audit verdict reasoning legitimacy (Z_2)
+      operationId: reviewVerdictLegitimacy
+      x-operator-name: Z_2
+      x-operator-type: evaluation
+      x-output-type: constraint
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: false
+      x-implementation-mode: audit
+      x-downstream-effect: Validates or invalidates liability-producing reasoning based on prior instantiated verdict artifacts.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Z2ReviewRequest'
+      responses:
+        '200':
+          description: Liability validated or invalidated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Z2ReviewResponse'
+
+  /path2/remedy-authorization:
+    post:
+      tags: [Path 2]
+      summary: Open remedy reasoning space (W_2)
+      operationId: authorizeRemedyReasoning
+      x-operator-name: W_2
+      x-operator-type: authorization
+      x-output-type: constraint
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Permits remedy reasoning to proceed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemedyAuthorizationRequest'
+      responses:
+        '200':
+          description: Remedy reasoning space authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemedyAuthorizationResponse'
+
+  /path2/remedy-reasoning:
+    post:
+      tags: [Path 2]
+      summary: Produce remedy candidate (USE_reasoning_remedy)
+      operationId: reasonRemedy
+      x-operator-name: USE_reasoning_remedy
+      x-operator-type: reasoning
+      x-output-type: constructive
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Produces a constructive candidate that must be instantiated at USAGE_remedy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemedyReasoningRequest'
+      responses:
+        '200':
+          description: Remedy candidate produced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemedyReasoningResponse'
+
+  /path2/remedy-instantiation:
+    post:
+      tags: [Path 2]
+      summary: Instantiate remedy in institutional record (USAGE_remedy)
+      operationId: instantiateRemedy
+      x-operator-name: USAGE_remedy
+      x-operator-type: instantiation
+      x-output-type: constructive
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: true
+      x-downstream-effect: Creates remedy record used in judgment formation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemedyInstantiationRequest'
+      responses:
+        '200':
+          description: Remedy instantiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemedyInstantiationResponse'
+
+  /path2/judgment-instantiation:
+    post:
+      tags: [Path 2]
+      summary: Instantiate final judgment (USAGE_judgment)
+      operationId: instantiateJudgment
+      x-operator-name: USAGE_judgment
+      x-operator-type: instantiation
+      x-output-type: constructive
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: true
+      x-downstream-effect: Creates the composite judgment artifact required for Z_3 and enforcement.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JudgmentInstantiationRequest'
+      responses:
+        '200':
+          description: Judgment instantiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JudgmentInstantiationResponse'
+
+  /path2/z3-review:
+    post:
+      tags: [Path 2, Review]
+      summary: Review outcome / remedy legitimacy (Z_3)
+      operationId: reviewOutcomeLegitimacy
+      x-operator-name: Z_3
+      x-operator-type: evaluation
+      x-output-type: constraint
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: false
+      x-implementation-mode: audit
+      x-downstream-effect: Validates or modifies the judgment artifact but does not itself instantiate a new artifact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Z3ReviewRequest'
+      responses:
+        '200':
+          description: Outcome reviewed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Z3ReviewResponse'
+
+  /review/zz:
+    post:
+      tags: [Review]
+      summary: Perform appellate / supervisory review (ZZ)
+      operationId: metaReview
+      x-operator-name: ZZ
+      x-operator-type: meta_reasoning
+      x-output-type: mixed
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Can impose pure constraints such as affirmance or reversal, or trigger downstream constructive consequences such as remand, vacatur, or judgment modification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZZReviewRequest'
+      responses:
+        '200':
+          description: Adjudication reviewed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZZReviewResponse'
+
+  /enforcement/authorization:
+    post:
+      tags: [Enforcement]
+      summary: Authorize enforcement of judgment (W_e)
+      operationId: authorizeEnforcement
+      x-operator-name: W_e
+      x-operator-type: authorization
+      x-output-type: constraint
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Permits enforcement to be instantiated at USAGE_e.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnforcementAuthorizationRequest'
+      responses:
+        '200':
+          description: Enforcement authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnforcementAuthorizationResponse'
+
+  /enforcement/instantiation:
+    post:
+      tags: [Enforcement]
+      summary: Instantiate enforcement authority (USAGE_e)
+      operationId: instantiateEnforcement
+      x-operator-name: USAGE_e
+      x-operator-type: instantiation
+      x-output-type: constructive
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: true
+      x-downstream-effect: Creates the writ and enforcement artifacts required for execution.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnforcementInstantiationRequest'
+      responses:
+        '200':
+          description: Enforcement instantiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnforcementInstantiationResponse'
+
+  /enforcement/execute:
+    post:
+      tags: [Enforcement]
+      summary: Execute judgment enforcement in the world (USE_world)
+      operationId: executeEnforcement
+      x-operator-name: USE_world
+      x-operator-type: execution
+      x-output-type: world
+      x-requires-prior-instantiation: true
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Alters the world and may later be challenged via A_e.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorldExecutionRequest'
+      responses:
+        '200':
+          description: Enforcement executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorldExecutionResponse'
+
+  /enforcement/challenge:
+    post:
+      tags: [Enforcement, Review]
+      summary: Trigger execution challenge (A_e)
+      operationId: createExecutionChallenge
+      x-operator-name: A_e
+      x-operator-type: trigger
+      x-output-type: trigger
+      x-requires-prior-instantiation: false
+      x-creates-institutional-artifact: false
+      x-downstream-effect: Re-enters adjudication to permit direct execution-legality review.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionChallengeRequest'
+      responses:
+        '200':
+          description: Execution challenge created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionChallengeResponse'
+
+components:
+  schemas:
+    OperatorMetadata:
+      type: object
+      properties:
+        operator_name:
+          type: string
+        operator_type:
+          type: string
+        output_type:
+          type: string
+          enum: [constructive, constraint, state_flip, mixed, world, trigger]
+        requires_prior_instantiation:
+          type: boolean
+        creates_institutional_artifact:
+          type: boolean
+        implementation_mode:
+          type: string
+        downstream_effect:
+          type: string
+
+    BaseStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ok, invalid, denied, suppressed, modified, affirmed, reversed, remanded]
+        state_id:
+          type: string
+        output_type:
+          type: string
+          enum: [constructive, constraint, state_flip, mixed, world, trigger]
+        requires_prior_instantiation:
+          type: boolean
+        creates_institutional_artifact:
+          type: boolean
+        downstream_effect:
+          type: string
+
+    RecordedFactsRequest:
+      type: object
+      required: [observables]
+      properties:
+        observables:
+          type: array
+          items:
+            type: string
+        event_facts:
+          type: array
+          items:
+            type: string
+        state_conditions:
+          type: array
+          items:
+            type: string
+
+    RecordedFactsResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            recorded_facts:
+              type: array
+              items:
+                type: string
+
+    ActionableAllegationRequest:
+      type: object
+      required: [recorded_facts]
+      properties:
+        recorded_facts:
+          type: array
+          items:
+            type: string
+        sworn:
+          type: boolean
+        particularized:
+          type: boolean
+        credible:
+          type: boolean
+        probable_cause_basis:
+          type: string
+
+    ActionableAllegationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            actionable_allegation_id:
+              type: string
+            trigger_ready:
+              type: boolean
+
+    CoerciveAuthorizationRequest:
+      type: object
+      required: [actionable_allegation_id]
+      properties:
+        actionable_allegation_id:
+          type: string
+        authorization_mode:
+          type: string
+          enum: [warrant, exception]
+        target:
+          type: string
+
+    CoerciveAuthorizationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            coercive_authority_id:
+              type: string
+            authorized:
+              type: boolean
+
+    CoerciveInstantiationRequest:
+      type: object
+      required: [coercive_authority_id]
+      properties:
+        coercive_authority_id:
+          type: string
+
+    CoerciveInstantiationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            usage_record_id:
+              type: string
+            instrument_type:
+              type: string
+
+    WorldExecutionRequest:
+      type: object
+      required: [authority_record_id]
+      properties:
+        authority_record_id:
+          type: string
+        execution_actions:
+          type: array
+          items:
+            type: string
+
+    WorldExecutionResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            world_altered_state:
+              type: array
+              items:
+                type: string
+            generated_records:
+              type: array
+              items:
+                type: string
+
+    LegalEntryRequest:
+      type: object
+      required: [recorded_facts]
+      properties:
+        recorded_facts:
+          type: array
+          items:
+            type: string
+        allegations:
+          type: array
+          items:
+            type: string
+        doctrinal_operativity:
+          type: boolean
+        element_anchoring:
+          type: boolean
+
+    LegalEntryResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            legal_entry_passed:
+              type: boolean
+            legally_cognizable_facts:
+              type: array
+              items:
+                type: string
+
+    Z1ReviewRequest:
+      type: object
+      required: [execution_facts]
+      properties:
+        execution_facts:
+          type: array
+          items:
+            type: string
+        coercive_authority_record:
+          type: string
+        challenge_type:
+          type: array
+          items:
+            type: string
+
+    Z1ReviewResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            coercive_use_lawful:
+              type: boolean
+            evidence_status:
+              type: string
+              enum: [admissible, suppressed, limited]
+            z1_findings:
+              type: object
+              additionalProperties: true
+
+    VerdictAuthorizationRequest:
+      type: object
+      required: [legally_cognizable_facts]
+      properties:
+        legally_cognizable_facts:
+          type: array
+          items:
+            type: string
+
+    VerdictAuthorizationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            verdict_space_open:
+              type: boolean
+
+    VerdictReasoningRequest:
+      type: object
+      required: [legally_cognizable_facts]
+      properties:
+        legally_cognizable_facts:
+          type: array
+          items:
+            type: string
+        admissible_evidence:
+          type: array
+          items:
+            type: string
+
+    VerdictReasoningResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            verdict_candidate:
+              type: string
+            liability_candidate:
+              type: string
+
+    VerdictInstantiationRequest:
+      type: object
+      required: [verdict_candidate]
+      properties:
+        verdict_candidate:
+          type: string
+        liability_candidate:
+          type: string
+
+    VerdictInstantiationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            verdict_record_id:
+              type: string
+            liability_record_id:
+              type: string
+
+    Z2ReviewRequest:
+      type: object
+      required: [verdict_record_id]
+      properties:
+        verdict_record_id:
+          type: string
+        liability_record_id:
+          type: string
+
+    Z2ReviewResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            liability_validated:
+              type: boolean
+            z2_findings:
+              type: object
+              additionalProperties: true
+
+    RemedyAuthorizationRequest:
+      type: object
+      required: [liability_record_id]
+      properties:
+        liability_record_id:
+          type: string
+
+    RemedyAuthorizationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            remedy_space_open:
+              type: boolean
+
+    RemedyReasoningRequest:
+      type: object
+      required: [liability_record_id]
+      properties:
+        liability_record_id:
+          type: string
+        case_facts:
+          type: array
+          items:
+            type: string
+        requested_remedies:
+          type: array
+          items:
+            type: string
+
+    RemedyReasoningResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            remedy_candidate:
+              type: object
+              additionalProperties: true
+
+    RemedyInstantiationRequest:
+      type: object
+      required: [remedy_candidate]
+      properties:
+        remedy_candidate:
+          type: object
+          additionalProperties: true
+
+    RemedyInstantiationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            remedy_record_id:
+              type: string
+
+    JudgmentInstantiationRequest:
+      type: object
+      required: [verdict_record_id, remedy_record_id]
+      properties:
+        verdict_record_id:
+          type: string
+        remedy_record_id:
+          type: string
+        legal_conversion_rules:
+          type: array
+          items:
+            type: string
+
+    JudgmentInstantiationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            judgment_id:
+              type: string
+            final_judgment:
+              type: object
+              additionalProperties: true
+
+    Z3ReviewRequest:
+      type: object
+      required: [judgment_id]
+      properties:
+        judgment_id:
+          type: string
+
+    Z3ReviewResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            judgment_validated:
+              type: boolean
+            judgment_modified:
+              type: boolean
+            z3_findings:
+              type: object
+              additionalProperties: true
+
+    ZZReviewRequest:
+      type: object
+      required: [judgment_id]
+      properties:
+        judgment_id:
+          type: string
+        review_scope:
+          type: array
+          items:
+            type: string
+
+    ZZReviewResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            appellate_result:
+              type: string
+              enum: [affirmed, reversed, remanded, modified]
+            zz_findings:
+              type: object
+              additionalProperties: true
+
+    EnforcementAuthorizationRequest:
+      type: object
+      required: [judgment_id]
+      properties:
+        judgment_id:
+          type: string
+
+    EnforcementAuthorizationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            enforcement_authorized:
+              type: boolean
+            enforcement_authority_id:
+              type: string
+
+    EnforcementInstantiationRequest:
+      type: object
+      required: [enforcement_authority_id]
+      properties:
+        enforcement_authority_id:
+          type: string
+
+    EnforcementInstantiationResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            enforcement_record_id:
+              type: string
+            writ_record_id:
+              type: string
+
+    ExecutionChallengeRequest:
+      type: object
+      required: [execution_facts]
+      properties:
+        execution_facts:
+          type: array
+          items:
+            type: string
+        challenge_grounds:
+          type: array
+          items:
+            type: string
+
+    ExecutionChallengeResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseStatus'
+        - type: object
+          properties:
+            execution_challenge_id:
+              type: string
+            reentry_available:
+              type: boolean
