@@ -1,0 +1,1202 @@
+{
+  "schema_name": "canonical_legal_operator_spec",
+  "version": "1.2",
+  "description": "Formal operator schema for Path 1 coercive action and Path 2 adjudication/enforcement, updated to distinguish constructive, constraint, mixed, and state-flip outputs, and to explicitly model classification, signal formation, continuity context, control-function families, and Za threshold evaluation.",
+  "operator_semantics": {
+    "A": "trigger into legal processing",
+    "L": "legal recognition / entry",
+    "W": "authorization",
+    "USE": "reasoning or execution activity",
+    "USAGE": "institutional instantiation",
+    "Z": "evaluation / review"
+  },
+  "output_type_semantics": {
+    "constructive": "creates an institutional artifact or durable legal object and therefore requires USAGE at the construction point",
+    "constraint": "does not create an institutional artifact; instead limits, validates, invalidates, or conditions downstream use",
+    "state_flip": "changes system status or entry state without creating a standalone institutional artifact",
+    "mixed": "can produce both constraint effects and downstream constructive effects depending on outcome",
+    "world": "world-level observation or state change outside institutional instantiation",
+    "trigger": "initiates a processing lane but does not itself create a legal artifact"
+  },
+  "signal_family_semantics": {
+    "intent": "signal supports inference of purpose, motive, intent, or scienter",
+    "knowledge_notice": "signal supports inference of awareness, knowledge, notice, or reason-to-know",
+    "causation": "signal supports inference of causal connection, contribution, or consequence",
+    "reliance_expectation": "signal supports inference of reliance, inducement, expectation, assent, or dependence",
+    "aggregation_pattern": "signal supports inference of repetition, pattern, practice, policy, or systemic conduct",
+    "normative_boundary": "signal supports inference of unfairness, bad faith, unreasonableness, deviation, or unjust enrichment"
+  },
+  "control_function_family_semantics": {
+    "admissibility": "gates whether a signal may enter legal processing at all",
+    "sufficiency": "tests whether the signal is strong enough to proceed to further reasoning or consequence",
+    "construction": "permits the system to build meaning or inference from a signal",
+    "constraint": "limits, narrows, or blocks extension of inference from a signal",
+    "materiality": "tests whether evaluated signal strength is sufficient to justify consequence",
+    "review": "audits whether the signal was processed, evaluated, and used correctly by the system"
+  },
+  "classification_mode_semantics": {
+    "fixed": "classification is mechanically determined and not materially contestable at this stage",
+    "contestable": "multiple plausible classifications may be argued before one is selected for signal formation"
+  },
+  "global_invariants": [
+    "No liability exists in the world layer.",
+    "Liability first becomes complete only after USAGE_verdict and successful Z_2 validation.",
+    "Remedy is not liability; remedy follows liability.",
+    "Judgment is not reasoning; judgment is institutional instantiation of the legal result.",
+    "Enforcement is not built into adjudication; it requires W_e -> USAGE_e -> USE_world.",
+    "Execution review is not automatic; it requires A_e.",
+    "Not every USE_reasoning step is followed by USAGE.",
+    "Constructive outputs create artifacts and require USAGE.",
+    "Constraint outputs do not create artifacts and do not require USAGE.",
+    "Z_2 and Z_3 consume prior instantiated artifacts but do not themselves instantiate new ones.",
+    "Facts do not directly produce legal consequence; facts are classified into signals, and signals are processed through control functions before consequence.",
+    "Classification is contestable at key reasoning stages; s5-style routing validates selected classifications but does not choose between competing plausible classifications.",
+    "Signals are typed by signal families and processed by control-function families.",
+    "Continuity is a background expectation and resistance structure, not itself a legal threshold.",
+    "Za is the evaluative field that assesses signal strength against continuity and doctrine.",
+    "Materiality is the threshold-crossing outcome of evaluation, not the evaluation process itself."
+  ],
+  "shared_schema_fragments": {
+    "classification_template": {
+      "classification_mode": "contestable",
+      "candidate_classifications": [
+        {
+          "primitive_type": "event|condition|conduct",
+          "fact_class": "generative_act|transitional_act|operative_act|activity_conduct|transformational_conduct|direct_conduct|object_condition|external_state_condition|internal_state_condition|direct_state_condition|latent_condition|activated_condition",
+          "rationale": "why this mapping is plausible"
+        }
+      ],
+      "selected_classification": {
+        "primitive_type": "event|condition|conduct",
+        "fact_class": "selected_fact_class",
+        "selection_rationale": "why this classification governs downstream processing"
+      },
+      "signal_family": "intent|knowledge_notice|causation|reliance_expectation|aggregation_pattern|normative_boundary",
+      "signal_source_fact_classes": [
+        "fact_class_1",
+        "fact_class_2"
+      ]
+    },
+    "signal_template": {
+      "signal_family": "intent|knowledge_notice|causation|reliance_expectation|aggregation_pattern|normative_boundary",
+      "signal_direction": "what inference the signal supports",
+      "signal_strength": "low|medium|high",
+      "signal_clarity": "low|medium|high",
+      "signal_specificity": "low|medium|high",
+      "signal_consistency_with_pattern": "low|medium|high",
+      "signal_observability": "low|medium|high",
+      "signal_commitment_level": "low|medium|high",
+      "signal_reversibility": "high|medium|low",
+      "signal_corrobation_level": "low|medium|high",
+      "signal_contradictions": [],
+      "signal_notes": []
+    },
+    "continuity_context_template": {
+      "relationship_exists": true,
+      "relationship_type": "contractual|fiduciary|coercive_state_action|criminal_prosecution|property|risk_interaction|other",
+      "continuity_density": "low|medium|high",
+      "pattern_stability": "low|medium|high",
+      "reliance_history": "low|medium|high",
+      "counter_signals_present": false,
+      "continuity_notes": []
+    },
+    "za_evaluation_template": {
+      "evaluates_signal_against_continuity": true,
+      "threshold_question": "is_signal_strong_enough_for_consequence",
+      "signal_strength_factors": [],
+      "continuity_resistance_factors": [],
+      "doctrinal_threshold_factors": [],
+      "threshold_result": "not_evaluated|not_met|met"
+    }
+  },
+  "paths": {
+    "path_1_coercive": {
+      "name": "Coercive Action Flow",
+      "description": "Allegation -> authority -> institutional instantiation -> execution -> optional challenge",
+      "states": [
+        {
+          "state_id": "P1-S0",
+          "state_name": "World Facts Exist",
+          "layer": "world",
+          "entry_operator": "O_P_R",
+          "operator_type": "world_observation",
+          "output_type": "world",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "inputs": [
+            "real_world_events",
+            "observable_conditions"
+          ],
+          "outputs": [
+            "recorded_facts"
+          ],
+          "fact_status": "world_facts_only",
+          "downstream_effect": "creates recorded facts that may feed A_a or L",
+          "allowed_next_states": [
+            "P1-S1"
+          ],
+          "notes": [
+            "No liability at this stage.",
+            "Pure visibility and recording."
+          ]
+        },
+        {
+          "state_id": "P1-S1",
+          "state_name": "Actionable Allegation Ready",
+          "layer": "system_entry",
+          "entry_operator": "A_a",
+          "operator_type": "trigger",
+          "output_type": "trigger",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "classification_mode": "contestable",
+          "candidate_classifications": [
+            {
+              "primitive_type": "event|conduct",
+              "fact_class": "operative_act|activity_conduct|direct_conduct|transformational_conduct",
+              "rationale": "coercive entry depends on actionable conduct or event capable of justifying force"
+            }
+          ],
+          "selected_classification": {
+            "primitive_type": "event|conduct",
+            "fact_class": "selected_actionable_fact_class",
+            "selection_rationale": "selected classification supports coercive allegation and probable cause framing"
+          },
+          "signal_family": "knowledge_notice|causation|normative_boundary",
+          "signal_source_fact_classes": [
+            "selected_actionable_fact_class"
+          ],
+          "signal": {
+            "signal_family": "knowledge_notice",
+            "signal_direction": "supports probable cause or actionable suspicion for coercive intervention",
+            "signal_strength": "medium|high",
+            "signal_clarity": "medium|high",
+            "signal_specificity": "medium|high",
+            "signal_consistency_with_pattern": "medium|high",
+            "signal_observability": "medium|high",
+            "signal_commitment_level": "medium|high",
+            "signal_reversibility": "low",
+            "signal_corrobation_level": "medium|high",
+            "signal_contradictions": [],
+            "signal_notes": [
+              "coercive entry uses signal of actionable wrongdoing rather than civil liability"
+            ]
+          },
+          "continuity_context": {
+            "relationship_exists": true,
+            "relationship_type": "coercive_state_action",
+            "continuity_density": "low|medium",
+            "pattern_stability": "low|medium",
+            "reliance_history": "low",
+            "counter_signals_present": false,
+            "continuity_notes": [
+              "continuity here is low-density and event-driven; coercive entry may arise from acute signal rather than long-term relational pattern"
+            ]
+          },
+          "control_function_family": "sufficiency",
+          "za_evaluation": {
+            "evaluates_signal_against_continuity": true,
+            "threshold_question": "is_signal_strong_enough_for_probable_cause_or_actionable_entry",
+            "signal_strength_factors": [
+              "sworn_or_attested_facts",
+              "particularity",
+              "credibility",
+              "corroboration"
+            ],
+            "continuity_resistance_factors": [
+              "counter_signals_present",
+              "pattern instability",
+              "ambiguity"
+            ],
+            "doctrinal_threshold_factors": [
+              "probable_cause_sufficiency"
+            ],
+            "threshold_result": "not_evaluated"
+          },
+          "inputs": [
+            "recorded_facts"
+          ],
+          "requirements": [
+            "sworn_or_attested_facts",
+            "particularity",
+            "credibility",
+            "probable_cause_sufficiency"
+          ],
+          "outputs": [
+            "actionable_allegation"
+          ],
+          "downstream_effect": "enables coercive authorization review by W_0",
+          "allowed_next_states": [
+            "P1-S2"
+          ],
+          "failure_states": [
+            "P1-FAIL-A_a"
+          ]
+        },
+        {
+          "state_id": "P1-S2",
+          "state_name": "Coercive Authority Authorized",
+          "layer": "system",
+          "entry_operator": "W_0",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "control_function_family": "constraint",
+          "inputs": [
+            "actionable_allegation"
+          ],
+          "outputs": [
+            "coercive_authority"
+          ],
+          "examples": [
+            "search_warrant_authorized",
+            "arrest_warrant_authorized",
+            "lawful_exception_recognized"
+          ],
+          "downstream_effect": "permits coercive authority to be instantiated at USAGE_1",
+          "allowed_next_states": [
+            "P1-S3"
+          ],
+          "failure_states": [
+            "P1-FAIL-W_0"
+          ]
+        },
+        {
+          "state_id": "P1-S3",
+          "state_name": "Coercive Authority Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_1",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "inputs": [
+            "coercive_authority"
+          ],
+          "outputs": [
+            "warrant_record",
+            "detention_order_record",
+            "coercive_instrument_record"
+          ],
+          "downstream_effect": "creates the institutional artifact required for coercive execution",
+          "allowed_next_states": [
+            "P1-S4"
+          ]
+        },
+        {
+          "state_id": "P1-S4",
+          "state_name": "Coercive Execution Completed",
+          "layer": "execution_world",
+          "entry_operator": "USE_world",
+          "operator_type": "execution",
+          "output_type": "world",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "inputs": [
+            "warrant_record",
+            "detention_order_record",
+            "coercive_instrument_record"
+          ],
+          "outputs": [
+            "world_altered_state",
+            "seized_evidence",
+            "custody_change",
+            "liberty_restriction"
+          ],
+          "examples": [
+            "search_executed",
+            "arrest_executed",
+            "seizure_completed",
+            "detention_completed"
+          ],
+          "downstream_effect": "produces world changes and records that may become evidentiary inputs or trigger challenge",
+          "allowed_next_states": [
+            "P1-S5",
+            "P2-S0"
+          ]
+        },
+        {
+          "state_id": "P1-S5",
+          "state_name": "Execution Challenge Triggered",
+          "layer": "system_entry",
+          "entry_operator": "A_e",
+          "operator_type": "trigger",
+          "output_type": "trigger",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "classification_mode": "contestable",
+          "candidate_classifications": [
+            {
+              "primitive_type": "conduct|event",
+              "fact_class": "operative_act|activity_conduct|transformational_conduct|direct_conduct",
+              "rationale": "execution challenge is built from allegedly unlawful conduct in execution"
+            }
+          ],
+          "selected_classification": {
+            "primitive_type": "conduct|event",
+            "fact_class": "selected_execution_fact_class",
+            "selection_rationale": "selected classification frames the legality defect to be reviewed"
+          },
+          "signal_family": "knowledge_notice|causation|normative_boundary",
+          "signal_source_fact_classes": [
+            "selected_execution_fact_class"
+          ],
+          "inputs": [
+            "record_of_execution",
+            "execution_facts"
+          ],
+          "requirements": [
+            "identifiable_execution_conduct",
+            "alleged_scope_or_force_or_procedure_defect",
+            "sufficient_factual_basis_for_review"
+          ],
+          "outputs": [
+            "execution_challenge"
+          ],
+          "downstream_effect": "re-enters adjudication to permit direct coercive-use review at Z_1",
+          "allowed_next_states": [
+            "P2-S1",
+            "P2-S2"
+          ],
+          "notes": [
+            "A_e is a re-entry trigger into adjudication.",
+            "It is not an automatic review stage."
+          ]
+        }
+      ],
+      "failure_states": [
+        {
+          "state_id": "P1-FAIL-A_a",
+          "state_name": "Insufficient Actionable Allegation",
+          "result": "no_coercive_authorization"
+        },
+        {
+          "state_id": "P1-FAIL-W_0",
+          "state_name": "Coercive Authorization Denied",
+          "result": "no_warrant_no_force"
+        }
+      ]
+    },
+    "path_2_adjudicative": {
+      "name": "Adjudicative and Enforcement Flow",
+      "description": "Facts -> recognition -> verdict -> remedy -> judgment -> review -> enforcement -> optional challenge",
+      "states": [
+        {
+          "state_id": "P2-S0",
+          "state_name": "Recorded Facts Available",
+          "layer": "world_to_system_input",
+          "entry_operator": "O_P_R",
+          "operator_type": "world_observation",
+          "output_type": "world",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "inputs": [
+            "real_world_events",
+            "observable_conditions"
+          ],
+          "outputs": [
+            "recorded_facts"
+          ],
+          "downstream_effect": "supplies recorded facts to legal entry",
+          "allowed_next_states": [
+            "P2-S1"
+          ]
+        },
+        {
+          "state_id": "P2-S1",
+          "state_name": "Legally Cognizable Facts",
+          "layer": "recognition_interface",
+          "entry_operator": "L",
+          "operator_type": "recognition",
+          "output_type": "state_flip",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "classification_mode": "contestable",
+          "candidate_classifications": [
+            {
+              "primitive_type": "event|condition|conduct",
+              "fact_class": "candidate_fact_class",
+              "rationale": "entry depends on plausible doctrinally operative classification of recorded facts"
+            }
+          ],
+          "selected_classification": {
+            "primitive_type": "selected_primitive_type",
+            "fact_class": "selected_fact_class",
+            "selection_rationale": "selected classification governs what signal families may plausibly be emitted at entry"
+          },
+          "signal_family": "intent|knowledge_notice|causation|reliance_expectation|aggregation_pattern|normative_boundary",
+          "signal_source_fact_classes": [
+            "selected_fact_class"
+          ],
+          "control_function_family": "sufficiency",
+          "signal": {
+            "signal_family": "selected_signal_family",
+            "signal_direction": "supports plausible inference of legally cognizable claim",
+            "signal_strength": "low|medium|high",
+            "signal_clarity": "low|medium|high",
+            "signal_specificity": "low|medium|high",
+            "signal_consistency_with_pattern": "low|medium|high",
+            "signal_observability": "low|medium|high",
+            "signal_commitment_level": "low|medium|high",
+            "signal_reversibility": "high|medium|low",
+            "signal_corrobation_level": "low|medium|high",
+            "signal_contradictions": [],
+            "signal_notes": [
+              "entry stage forms preliminary signal set from selected classification"
+            ]
+          },
+          "continuity_context": {
+            "relationship_exists": true,
+            "relationship_type": "selected_relationship_type",
+            "continuity_density": "low|medium|high",
+            "pattern_stability": "low|medium|high",
+            "reliance_history": "low|medium|high",
+            "counter_signals_present": false,
+            "continuity_notes": [
+              "continuity frames plausibility but does not itself determine entry"
+            ]
+          },
+          "za_evaluation": {
+            "evaluates_signal_against_continuity": true,
+            "threshold_question": "is_signal_strong_enough_for_legal_entry",
+            "signal_strength_factors": [
+              "non_conclusory_factuality",
+              "element_anchoring",
+              "public_record_integration",
+              "coherence"
+            ],
+            "continuity_resistance_factors": [
+              "counter_signals_present",
+              "pattern instability",
+              "weak relational framing"
+            ],
+            "doctrinal_threshold_factors": [
+              "doctrinal_operativity",
+              "reasonable_inference_of_liability",
+              "speculation_boundary"
+            ],
+            "threshold_result": "not_evaluated"
+          },
+          "inputs": [
+            "recorded_facts"
+          ],
+          "embedded_reasoning": {
+            "operator": "USE_reasoning_plausibility",
+            "mode": "threshold",
+            "output_type": "state_flip",
+            "requires_prior_instantiation": false,
+            "creates_institutional_artifact": false,
+            "control_function_family": "sufficiency",
+            "rules": [
+              "non_conclusory_factuality",
+              "doctrinal_operativity",
+              "element_anchoring",
+              "reasonable_inference_of_liability",
+              "speculation_boundary",
+              "public_record_integration",
+              "basic_coherence_checks"
+            ]
+          },
+          "outputs": [
+            "legally_cognizable_facts"
+          ],
+          "downstream_effect": "changes system status from recorded facts to legally cognizable facts without creating a standalone institutional artifact",
+          "allowed_next_states": [
+            "P2-S2",
+            "P2-S3"
+          ],
+          "failure_states": [
+            "P2-FAIL-L"
+          ],
+          "notes": [
+            "This is threshold reasoning at the system entry interface.",
+            "This is not full adjudication and not liability."
+          ]
+        },
+        {
+          "state_id": "P2-S2",
+          "state_name": "Coercive Use Legality Determined",
+          "layer": "system_entry_adjudication",
+          "entry_operator": "Z_1",
+          "operator_type": "evaluation",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "classification_mode": "contestable",
+          "candidate_classifications": [
+            {
+              "primitive_type": "conduct|event",
+              "fact_class": "operative_act|activity_conduct|transformational_conduct|direct_conduct",
+              "rationale": "coercive-use review depends on classification of executed conduct and legality defects"
+            }
+          ],
+          "selected_classification": {
+            "primitive_type": "conduct|event",
+            "fact_class": "selected_execution_review_fact_class",
+            "selection_rationale": "selected classification frames the signal of lawful or unlawful coercive use"
+          },
+          "signal_family": "knowledge_notice|causation|normative_boundary",
+          "signal_source_fact_classes": [
+            "selected_execution_review_fact_class"
+          ],
+          "control_function_family": "constraint",
+          "signal": {
+            "signal_family": "normative_boundary",
+            "signal_direction": "supports inference of lawful or unlawful use of state power",
+            "signal_strength": "low|medium|high",
+            "signal_clarity": "low|medium|high",
+            "signal_specificity": "low|medium|high",
+            "signal_consistency_with_pattern": "low|medium|high",
+            "signal_observability": "medium|high",
+            "signal_commitment_level": "medium|high",
+            "signal_reversibility": "low",
+            "signal_corrobation_level": "low|medium|high",
+            "signal_contradictions": [],
+            "signal_notes": [
+              "coercive-use signals may trigger direct constraint outputs without USAGE"
+            ]
+          },
+          "continuity_context": {
+            "relationship_exists": true,
+            "relationship_type": "coercive_state_action",
+            "continuity_density": "low|medium",
+            "pattern_stability": "low|medium",
+            "reliance_history": "low",
+            "counter_signals_present": false,
+            "continuity_notes": [
+              "continuity in coercive review is often episodic but may include repeated misconduct patterns"
+            ]
+          },
+          "za_evaluation": {
+            "evaluates_signal_against_continuity": true,
+            "threshold_question": "is_signal_strong_enough_to_justify_constraint_on_coercive_use",
+            "signal_strength_factors": [
+              "execution_facts",
+              "scope_deviation",
+              "force_level",
+              "procedural_regularities_or_defects"
+            ],
+            "continuity_resistance_factors": [
+              "lawful_authority_context",
+              "counter_signals_of_compliance",
+              "ambiguity_in_record"
+            ],
+            "doctrinal_threshold_factors": [
+              "warrant_or_exception_validity",
+              "scope_compliance",
+              "admissibility_consequences"
+            ],
+            "threshold_result": "not_evaluated"
+          },
+          "inputs": [
+            "execution_challenge",
+            "execution_facts",
+            "coercive_authority_record"
+          ],
+          "implementation_mode": "USE_reasoning_coercive_legitimacy",
+          "tests": {
+            "Zb_dominant": [
+              "warrant_or_exception_validity",
+              "scope_compliance",
+              "procedural_regularity",
+              "admissibility_consequences"
+            ],
+            "Za_bounded": [
+              "no_excessive_force",
+              "no_abusive_execution",
+              "no_bad_faith_expansion_beyond_authorization"
+            ]
+          },
+          "outputs": [
+            "coercive_use_lawful_or_unlawful",
+            "evidence_admissible_or_suppressed"
+          ],
+          "downstream_effect": "limits admissibility and usable evidence without creating a standalone institutional artifact",
+          "allowed_next_states": [
+            "P2-S3",
+            "P2-FAIL-Z_1"
+          ],
+          "notes": [
+            "Z_1 is a direct constraint output produced through reasoning.",
+            "No USAGE step is required."
+          ]
+        },
+        {
+          "state_id": "P2-S3",
+          "state_name": "Verdict Reasoning Space Open",
+          "layer": "system",
+          "entry_operator": "W_1",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "control_function_family": "constraint",
+          "inputs": [
+            "legally_cognizable_facts",
+            "admissible_evidence"
+          ],
+          "outputs": [
+            "verdict_reasoning_space"
+          ],
+          "examples": [
+            "jury_instructions_issued",
+            "judicial_fact_law_reasoning_authorized"
+          ],
+          "downstream_effect": "permits full adjudicative reasoning to proceed",
+          "allowed_next_states": [
+            "P2-S4"
+          ]
+        },
+        {
+          "state_id": "P2-S4",
+          "state_name": "Verdict Candidate Produced",
+          "layer": "system",
+          "entry_operator": "USE_reasoning_verdict",
+          "operator_type": "reasoning",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "classification_mode": "contestable",
+          "candidate_classifications": [
+            {
+              "primitive_type": "event|condition|conduct",
+              "fact_class": "candidate_fact_class",
+              "rationale": "verdict reasoning depends on selecting among competing plausible fact-to-signal mappings"
+            }
+          ],
+          "selected_classification": {
+            "primitive_type": "selected_primitive_type",
+            "fact_class": "selected_fact_class",
+            "selection_rationale": "selected classification governs signal generation for liability reasoning"
+          },
+          "signal_family": "intent|knowledge_notice|causation|reliance_expectation|aggregation_pattern|normative_boundary",
+          "signal_source_fact_classes": [
+            "selected_fact_class"
+          ],
+          "control_function_family": "construction",
+          "signal": {
+            "signal_family": "selected_signal_family",
+            "signal_direction": "supports liability-producing inference under selected doctrine",
+            "signal_strength": "low|medium|high",
+            "signal_clarity": "low|medium|high",
+            "signal_specificity": "low|medium|high",
+            "signal_consistency_with_pattern": "low|medium|high",
+            "signal_observability": "low|medium|high",
+            "signal_commitment_level": "low|medium|high",
+            "signal_reversibility": "high|medium|low",
+            "signal_corrobation_level": "low|medium|high",
+            "signal_contradictions": [],
+            "signal_notes": [
+              "verdict reasoning converts selected classifications into typed signals for liability analysis"
+            ]
+          },
+          "continuity_context": {
+            "relationship_exists": true,
+            "relationship_type": "selected_relationship_type",
+            "continuity_density": "low|medium|high",
+            "pattern_stability": "low|medium|high",
+            "reliance_history": "low|medium|high",
+            "counter_signals_present": false,
+            "continuity_notes": [
+              "continuity supplies resistance or support against which new liability signals are evaluated"
+            ]
+          },
+          "inputs": [
+            "verdict_reasoning_space",
+            "legally_cognizable_facts",
+            "admissible_evidence"
+          ],
+          "internal_modules": {
+            "M1_factfinding": [
+              "evidence_evaluation",
+              "circumstantial_inference",
+              "relation_strength_testing"
+            ],
+            "M2_doctrinal_meaning_assignment": [
+              "element_satisfaction",
+              "legal_classification",
+              "doctrinal_interpretation"
+            ],
+            "inference_control": [
+              "temporal_coherence",
+              "structural_plausibility",
+              "behavioral_plausibility",
+              "pattern_stability",
+              "contradiction_avoidance"
+            ]
+          },
+          "outputs": [
+            "verdict_candidate",
+            "liability_candidate"
+          ],
+          "downstream_effect": "produces a constructive candidate that must be instantiated at USAGE_verdict",
+          "allowed_next_states": [
+            "P2-S5"
+          ]
+        },
+        {
+          "state_id": "P2-S5",
+          "state_name": "Verdict Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_verdict",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "inputs": [
+            "verdict_candidate",
+            "liability_candidate"
+          ],
+          "outputs": [
+            "verdict_record",
+            "liability_record"
+          ],
+          "downstream_effect": "creates the verdict artifact required for Z_2 audit",
+          "allowed_next_states": [
+            "P2-S6"
+          ]
+        },
+        {
+          "state_id": "P2-S6",
+          "state_name": "Liability Validated",
+          "layer": "system",
+          "entry_operator": "Z_2",
+          "operator_type": "evaluation",
+          "output_type": "constraint",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "control_function_family": "materiality",
+          "signal_family": "selected_signal_family",
+          "continuity_context": {
+            "relationship_exists": true,
+            "relationship_type": "selected_relationship_type",
+            "continuity_density": "low|medium|high",
+            "pattern_stability": "low|medium|high",
+            "reliance_history": "low|medium|high",
+            "counter_signals_present": false,
+            "continuity_notes": [
+              "Z_2 evaluates signal strength against the continuity field and doctrinal threshold"
+            ]
+          },
+          "za_evaluation": {
+            "evaluates_signal_against_continuity": true,
+            "threshold_question": "is_signal_strong_enough_for_liability_consequence",
+            "signal_strength_factors": [
+              "record_support",
+              "reasonable_inference_vs_speculation",
+              "doctrinal_coherence",
+              "materially_consequential_support"
+            ],
+            "continuity_resistance_factors": [
+              "counter_signals_present",
+              "pattern instability",
+              "contradictory evidence",
+              "attenuation"
+            ],
+            "doctrinal_threshold_factors": [
+              "evidentiary_regime_integrity",
+              "nondistortion_of_operative_evidentiary_regime",
+              "absence_of_intentional_distortion_or_fabrication"
+            ],
+            "threshold_result": "not_evaluated"
+          },
+          "inputs": [
+            "verdict_record",
+            "liability_record"
+          ],
+          "implementation_mode": "audit",
+          "tests": {
+            "Zb_dominant": [
+              "evidentiary_regime_integrity",
+              "record_support",
+              "reasonable_inference_vs_speculation",
+              "doctrinal_coherence",
+              "nondistortion_of_operative_evidentiary_regime",
+              "materially_consequential_support"
+            ],
+            "Za_minimal_indirect": [
+              "exclusion_of_bad_faith_manipulation",
+              "absence_of_intentional_distortion_or_fabrication"
+            ]
+          },
+          "outputs": [
+            "validated_liability",
+            "invalidated_liability"
+          ],
+          "downstream_effect": "validates or invalidates liability-producing reasoning based on prior instantiated verdict artifacts",
+          "allowed_next_states": [
+            "P2-S7"
+          ],
+          "failure_states": [
+            "P2-FAIL-Z_2"
+          ],
+          "notes": [
+            "Liability first becomes complete here.",
+            "Z_2 consumes prior instantiated artifacts but does not itself instantiate a new one."
+          ]
+        },
+        {
+          "state_id": "P2-S7",
+          "state_name": "Remedy Reasoning Space Open",
+          "layer": "system",
+          "entry_operator": "W_2",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "control_function_family": "constraint",
+          "inputs": [
+            "validated_liability"
+          ],
+          "outputs": [
+            "remedy_reasoning_space"
+          ],
+          "downstream_effect": "permits remedy reasoning to proceed",
+          "allowed_next_states": [
+            "P2-S8"
+          ]
+        },
+        {
+          "state_id": "P2-S8",
+          "state_name": "Remedy Candidate Produced",
+          "layer": "system",
+          "entry_operator": "USE_reasoning_remedy",
+          "operator_type": "reasoning",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": false,
+          "control_function_family": "construction",
+          "inputs": [
+            "remedy_reasoning_space",
+            "validated_liability",
+            "case_facts"
+          ],
+          "internal_modules": {
+            "C_s_consequence_specification": {
+              "legal_remedies": [
+                "compensatory_damages",
+                "consequential_damages",
+                "reliance_damages",
+                "expectation_damages",
+                "nominal_damages",
+                "statutory_damages",
+                "treble_damages",
+                "punitive_damages",
+                "liquidated_damages",
+                "restitution_damages",
+                "quantum_meruit",
+                "quantum_valebant",
+                "money_had_and_received"
+              ],
+              "equitable_remedies": [
+                "injunction",
+                "specific_performance",
+                "rescission",
+                "reformation",
+                "constructive_trust",
+                "equitable_lien",
+                "equitable_accounting",
+                "disgorgement",
+                "tracing",
+                "subrogation"
+              ],
+              "prerogative_writs": [
+                "habeas_corpus",
+                "mandamus",
+                "prohibition",
+                "certiorari",
+                "quo_warranto"
+              ]
+            },
+            "remedy_specific_reasoning": [
+              "damage_measurement",
+              "statutory_multipliers",
+              "restitution_calculation",
+              "remedy_device_fit",
+              "scope_specification"
+            ]
+          },
+          "outputs": [
+            "remedy_candidate"
+          ],
+          "downstream_effect": "produces a constructive candidate that must be instantiated at USAGE_remedy",
+          "allowed_next_states": [
+            "P2-S9"
+          ]
+        },
+        {
+          "state_id": "P2-S9",
+          "state_name": "Remedy Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_remedy",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "inputs": [
+            "remedy_candidate"
+          ],
+          "outputs": [
+            "remedy_record"
+          ],
+          "downstream_effect": "creates the remedy artifact used in judgment formation",
+          "allowed_next_states": [
+            "P2-S10"
+          ]
+        },
+        {
+          "state_id": "P2-S10",
+          "state_name": "Final Judgment Entered",
+          "layer": "system",
+          "entry_operator": "USAGE_judgment",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": true,
+          "inputs": [
+            "verdict_record",
+            "remedy_record",
+            "legal_conversion_rules"
+          ],
+          "outputs": [
+            "final_judgment"
+          ],
+          "structure": [
+            "verdict_liability",
+            "remedy_consequence",
+            "legal_conversion_rules"
+          ],
+          "downstream_effect": "creates the composite judgment artifact required for Z_3 and enforcement",
+          "allowed_next_states": [
+            "P2-S11",
+            "P2-S12"
+          ]
+        },
+        {
+          "state_id": "P2-S11",
+          "state_name": "Outcome Reviewed",
+          "layer": "system",
+          "entry_operator": "Z_3",
+          "operator_type": "evaluation",
+          "output_type": "constraint",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "control_function_family": "materiality",
+          "za_evaluation": {
+            "evaluates_signal_against_continuity": true,
+            "threshold_question": "is_outcome_signal_strong_enough_and_proportionate_for_final_consequence",
+            "signal_strength_factors": [
+              "proportionality_of_remedy",
+              "fairness_of_burden_imposed",
+              "equitable_balance_between_parties"
+            ],
+            "continuity_resistance_factors": [
+              "countervailing_equities",
+              "institutional_limitations",
+              "enforceability_concerns"
+            ],
+            "doctrinal_threshold_factors": [
+              "remedy_within_legal_authority",
+              "procedural_correctness",
+              "consistency_with_statutory_and_doctrinal_limits"
+            ],
+            "threshold_result": "not_evaluated"
+          },
+          "inputs": [
+            "final_judgment"
+          ],
+          "implementation_mode": "audit",
+          "tests": {
+            "Za_primary": [
+              "proportionality_of_remedy",
+              "fairness_of_burden_imposed",
+              "equitable_balance_between_parties",
+              "avoidance_of_over_or_under_compensation"
+            ],
+            "Zb_constraints": [
+              "remedy_within_legal_authority",
+              "procedural_correctness",
+              "consistency_with_statutory_and_doctrinal_limits",
+              "proper_scope_and_enforceability"
+            ]
+          },
+          "outputs": [
+            "validated_judgment",
+            "modified_judgment"
+          ],
+          "downstream_effect": "validates or modifies the judgment artifact but does not itself instantiate a new artifact",
+          "allowed_next_states": [
+            "P2-S12",
+            "P2-S13"
+          ]
+        },
+        {
+          "state_id": "P2-S12",
+          "state_name": "Appellate / Supervisory Review Completed",
+          "layer": "system",
+          "entry_operator": "ZZ",
+          "operator_type": "meta_reasoning",
+          "output_type": "mixed",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "control_function_family": "review",
+          "inputs": [
+            "recognition_record",
+            "verdict_record",
+            "remedy_record",
+            "final_judgment",
+            "prior_Z_outputs"
+          ],
+          "tests": {
+            "Zb_dominant": [
+              "correct_application_of_law",
+              "adherence_to_procedural_rules",
+              "doctrinal_validity",
+              "institutional_legitimacy"
+            ],
+            "Za_limited_doctrine_mediated": [
+              "abuse_of_discretion_review",
+              "correction_of_legally_cognizable_extreme_unfairness"
+            ]
+          },
+          "standards_of_review": {
+            "de_novo": "legal_structure",
+            "clear_error": "fact_reasoning",
+            "abuse_of_discretion": "outcome_management"
+          },
+          "outputs": [
+            "affirmed",
+            "reversed",
+            "remanded",
+            "modified"
+          ],
+          "downstream_effect": "can impose pure constraints such as affirmance or reversal, or trigger downstream constructive consequences such as remand, vacatur, or judgment modification",
+          "allowed_next_states": [
+            "P2-S13",
+            "P2-FAIL-ZZ-REMAND",
+            "P2-FAIL-ZZ-REVERSAL"
+          ]
+        },
+        {
+          "state_id": "P2-S13",
+          "state_name": "Enforcement Authorized",
+          "layer": "system",
+          "entry_operator": "W_e",
+          "operator_type": "authorization",
+          "output_type": "constraint",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "control_function_family": "constraint",
+          "inputs": [
+            "final_or_affirmed_judgment"
+          ],
+          "outputs": [
+            "authority_to_enforce"
+          ],
+          "downstream_effect": "permits enforcement to be instantiated at USAGE_e",
+          "allowed_next_states": [
+            "P2-S14"
+          ]
+        },
+        {
+          "state_id": "P2-S14",
+          "state_name": "Enforcement Instantiated",
+          "layer": "system",
+          "entry_operator": "USAGE_e",
+          "operator_type": "instantiation",
+          "output_type": "constructive",
+          "requires_prior_instantiation": false,
+          "creates_institutional_artifact": true,
+          "inputs": [
+            "authority_to_enforce"
+          ],
+          "outputs": [
+            "writ_record",
+            "enforcement_record"
+          ],
+          "downstream_effect": "creates the writ and enforcement artifacts required for execution",
+          "allowed_next_states": [
+            "P2-S15"
+          ]
+        },
+        {
+          "state_id": "P2-S15",
+          "state_name": "Judgment Executed",
+          "layer": "execution_world",
+          "entry_operator": "USE_world",
+          "operator_type": "execution",
+          "output_type": "world",
+          "requires_prior_instantiation": true,
+          "creates_institutional_artifact": false,
+          "inputs": [
+            "writ_record",
+            "enforcement_record"
+          ],
+          "outputs": [
+            "world_altered_state",
+            "property_transferred",
+            "custody_changed",
+            "injunction_enforced",
+            "funds_seized"
+          ],
+          "downstream_effect": "alters the world and may later be challenged via A_e",
+          "allowed_next_states": [
+            "P1-S5",
+            "P2-TERMINAL"
+          ],
+          "notes": [
+            "Execution review is not automatic.",
+            "Any challenge to execution must re-enter through A_e."
+          ]
+        }
+      ],
+      "failure_states": [
+        {
+          "state_id": "P2-FAIL-L",
+          "state_name": "No Legal Entry",
+          "result": "dismissal_or_non_entry"
+        },
+        {
+          "state_id": "P2-FAIL-Z_1",
+          "state_name": "Coercive Use Unlawful",
+          "result": "suppression_or_exclusion_or_termination"
+        },
+        {
+          "state_id": "P2-FAIL-Z_2",
+          "state_name": "Liability Reasoning Invalidated",
+          "result": "new_trial_reversal_jmol_like_invalidation"
+        },
+        {
+          "state_id": "P2-FAIL-ZZ-REMAND",
+          "state_name": "Remand Ordered",
+          "result": "return_to_lower_stage_for_further_proceedings"
+        },
+        {
+          "state_id": "P2-FAIL-ZZ-REVERSAL",
+          "state_name": "Reversal Ordered",
+          "result": "judgment_not_enforceable"
+        }
+      ],
+      "terminal_state": {
+        "state_id": "P2-TERMINAL",
+        "state_name": "Unchallenged Execution Complete",
+        "result": "system_cycle_complete"
+      }
+    }
+  },
+  "cross_path_invariants": [
+    "A_a and A_e are bridge-trigger variables, not world facts.",
+    "L is the civil/general claim entry gate and produces a state-flip output.",
+    "Z_1 is the coercive-use legality lane and produces a direct constraint output with no USAGE step.",
+    "Z_2 and Z_3 are constraint audits of prior instantiated outputs.",
+    "ZZ is meta-reasoning about prior evaluations and adjudicative outputs and has mixed output logic.",
+    "Path 1 world outputs can become Path 2 evidentiary inputs.",
+    "Post-judgment execution challenge re-enters through A_e and may lead to Z_1 review.",
+    "Signal formation follows classification; classification remains contestable at key legal reasoning stages.",
+    "Signal families define what kind of inference is being attempted.",
+    "Control-function families define what the system does to a signal.",
+    "Continuity supplies background resistance and expectation structure against which signals are evaluated.",
+    "Za asks whether the processed signal is enough; materiality is when the answer becomes yes."
+  ]
+}
