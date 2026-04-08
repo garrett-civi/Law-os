@@ -1,0 +1,1316 @@
+{
+  "schema_name": "canonical_legal_operator_spec",
+  "version": "3.0",
+  "description": "Canonical legal operator specification aligned to V2 process map. Signal is constructed inside USE_reasoning, not at the world layer. Z2 is distributed across recognition, plausibility, authority, merits, verdict, remedy, and judgment. Path 1 and Path 2 are integrated in one executable schema.",
+  "operator_semantics": {
+    "A": "trigger into legal processing",
+    "L": "recognition / cognizability threshold reasoning",
+    "T": "plausibility / sufficiency threshold reasoning",
+    "W": "authorization / bounded inference-space creation",
+    "E": "evidentiary admissibility gate",
+    "M1": "factfinding / State-Event Transition Structure construction and selection",
+    "M2": "doctrinal classification / meaning assignment",
+    "USE": "internal or external conduct",
+    "USAGE": "institutional instantiation / commitment event",
+    "Z2": "distributed validation family with authority to validate or invalidate committed institutional acts",
+    "Z3": "outcome evaluation / acceptability review without direct corrective commitment power",
+    "ZZ": "system-level review / appellate or supervisory audit"
+  },
+  "output_type_semantics": {
+    "constructive": "creates an institutional artifact or durable legal object and therefore requires USAGE at the construction point",
+    "constraint": "does not create an institutional artifact and instead limits, validates, invalidates, or conditions downstream use",
+    "state_flip": "changes system status without creating a standalone institutional artifact",
+    "mixed": "can produce both constraint effects and downstream constructive effects depending on outcome",
+    "world": "world-level observation or state change outside institutional instantiation",
+    "trigger": "initiates a processing lane but does not itself create a legal artifact"
+  },
+  "signal_semantics": {
+    "definition": "Signal is constructed inside USE_reasoning from recorded world material. It is not formed at the world level.",
+    "notes": [
+      "Signal is typed and processed inside legal reasoning.",
+      "Inference is staged and only fully occurs at M1.",
+      "Meaning assignment occurs at M2.",
+      "Continuity is a background resistance / expectation structure, not itself a threshold or consequence."
+    ]
+  },
+  "signal_type_families": {
+    "status_condition": "supports inference of legal status, condition, or relational position",
+    "volition_consent": "supports inference of agreement, authorization, permission, or consent",
+    "authority": "supports inference of legal authorization, burden allocation, or inference-space legitimacy",
+    "causation": "supports inference of causal relation, consequence, or transition linkage",
+    "reliance_expectation": "supports inference of reliance, inducement, expectation, or assent",
+    "use_activation": "supports inference that relation or condition was activated into legally relevant conduct",
+    "reasonableness_proportionality": "supports inference of reasonableness, proportionality, or calibrated deviation",
+    "procedural_legitimacy": "supports inference of procedural validity, threshold compliance, and reasoning-space integrity"
+  },
+  "control_function_families": {
+    "entry": "controls whether material may enter legal processing",
+    "construction": "constructs signal or legal object from recorded material",
+    "recognition": "tests whether a legally cognizable category exists",
+    "plausibility": "tests whether facts plausibly justify proceeding",
+    "admissibility": "filters the record into evidence usable by M1",
+    "merits_screening": "tests whether a legally valid verdict could exist before trial",
+    "factfinding": "constructs and selects one State-Event Transition Structure",
+    "classification": "assigns doctrinal meaning to the selected State-Event Transition Structure",
+    "support_validation": "tests whether a committed outcome is sufficiently supported",
+    "acceptability": "tests whether a completed outcome is proportionate / fair / acceptable",
+    "review": "audits correctness, reasoning validity, and procedural integrity"
+  },
+  "global_invariants": [
+    "No liability exists at the world layer.",
+    "Signal is not formed at the world layer; signal is constructed inside USE_reasoning.",
+    "Inference is staged and only fully occurs at M1.",
+    "Meaning lives at M2.",
+    "Not every USE_reasoning step is followed by USAGE.",
+    "Constructive outputs create artifacts and require USAGE.",
+    "Constraint outputs do not create artifacts and do not require USAGE.",
+    "Z2 is a distributed family, not a single checkpoint.",
+    "Each Z2[x] audits a legally committed institutional act.",
+    "Continuity is a background expectation and resistance structure against which typed signals are evaluated.",
+    "Za is the evaluative field that tests whether processed signal strength is enough.",
+    "Materiality is the threshold-crossing outcome of evaluation, not the evaluation process itself.",
+    "M1 and M2 build.",
+    "Z2 decides.",
+    "Z3 judges.",
+    "ZZ audits."
+  ],
+  "fact_class_schema": {
+    "primitives": [
+      "event",
+      "condition",
+      "conduct"
+    ],
+    "fact_classes": [
+      "generative_act",
+      "transitional_act",
+      "operative_act",
+      "activity_conduct",
+      "transformational_conduct",
+      "direct_conduct",
+      "object_condition",
+      "external_state_condition",
+      "internal_state_condition",
+      "direct_state_condition",
+      "latent_condition",
+      "activated_condition"
+    ],
+    "routing_rules": [
+      "Conditions do not ignite; acts or conduct ignite.",
+      "Internal conditions never travel artifact path.",
+      "No doctrine may consume an incompatible fact class.",
+      "Activation is always Event + threshold -> Activated Condition."
+    ]
+  },
+  "shared_schema_fragments": {
+    "classification_block": {
+      "classification_mode": "contestable",
+      "candidate_fact_classifications": [
+        {
+          "primitive_type": "event|condition|conduct",
+          "fact_class": "candidate_fact_class",
+          "rationale": "why this mapping is plausible"
+        }
+      ],
+      "selected_fact_classification": {
+        "primitive_type": "selected_primitive_type",
+        "fact_class": "selected_fact_class",
+        "selection_rationale": "why this classification governs downstream processing"
+      },
+      "pathway_compatibility": {
+        "event_path": false,
+        "artifact_path_auto_persistent": false,
+        "artifact_path_human_dependent": false,
+        "hybrid_path": false
+      }
+    },
+    "signal_block": {
+      "signal_constructed_inside": "USE_reasoning_*",
+      "signal_type_family": "status_condition|volition_consent|authority|causation|reliance_expectation|use_activation|reasonableness_proportionality|procedural_legitimacy",
+      "signal_profile": {
+        "strength": "low|medium|high",
+        "clarity": "low|medium|high",
+        "specificity": "low|medium|high",
+        "observability": "low|medium|high",
+        "consistency_with_pattern": "low|medium|high",
+        "commitment_level": "low|medium|high",
+        "contradictions_present": false,
+        "attenuation": "low|medium|high"
+      },
+      "signal_notes": []
+    },
+    "continuity_block": {
+      "relationship_exists": true,
+      "relationship_type": "contractual|fiduciary|coercive_state_action|criminal_prosecution|property|risk_interaction|other",
+      "continuity_density": "low|medium|high",
+      "pattern_stability": "low|medium|high",
+      "reliance_history": "low|medium|high",
+      "counter_signals_present": false,
+      "continuity_notes": []
+    },
+    "za_block": {
+      "evaluates_signal_against_continuity": true,
+      "signal_strength_factors": [],
+      "continuity_resistance_factors": [],
+      "doctrinal_threshold_factors": [],
+      "threshold_question": "is_processed_signal_strong_enough_for_the_relevant_consequence",
+      "threshold_result": "not_evaluated|not_met|met"
+    }
+  },
+  "path_2_adjudicative": {
+    "name": "Adjudicative Pipeline",
+    "description": "facts -> reasoning -> doctrine -> judgment -> enforcement",
+    "states": [
+      {
+        "state_id": "P2-S0",
+        "state_name": "World Facts Recorded",
+        "layer": "world",
+        "entry_operator": "O_P_R",
+        "operator_type": "world_observation",
+        "control_function_family": "entry",
+        "output_type": "world",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "real_world_events",
+          "observable_conditions"
+        ],
+        "outputs": [
+          "recorded_world_material"
+        ],
+        "notes": [
+          "Signal is not formed at the world level.",
+          "Only events and states exist here."
+        ],
+        "allowed_next_states": [
+          "P2-S1"
+        ]
+      },
+      {
+        "state_id": "P2-S1",
+        "state_name": "Construction - Claim Pipeline",
+        "layer": "system_entry",
+        "entry_operator": "USE_reasoning_construction",
+        "operator_type": "reasoning",
+        "control_function_family": "construction",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "classification": {
+          "classification_mode": "contestable",
+          "candidate_fact_classifications": [
+            {
+              "primitive_type": "event|condition|conduct",
+              "fact_class": "candidate_fact_class",
+              "rationale": "candidate mapping for relation-conduct structuring"
+            }
+          ],
+          "selected_fact_classification": {
+            "primitive_type": "selected_primitive_type",
+            "fact_class": "selected_fact_class",
+            "selection_rationale": "selected mapping governs signal construction and claim object formation"
+          },
+          "pathway_compatibility": {
+            "event_path": true,
+            "artifact_path_auto_persistent": true,
+            "artifact_path_human_dependent": true,
+            "hybrid_path": true
+          }
+        },
+        "signal": {
+          "signal_constructed_inside": "USE_reasoning_construction",
+          "signal_type_family": "status_condition|volition_consent|use_activation",
+          "signal_profile": {
+            "strength": "low|medium",
+            "clarity": "medium|high",
+            "specificity": "medium|high",
+            "observability": "medium|high",
+            "consistency_with_pattern": "low|medium|high",
+            "commitment_level": "low|medium",
+            "contradictions_present": false,
+            "attenuation": "low|medium"
+          },
+          "signal_notes": [
+            "Construction forms signal and legal object from recorded material.",
+            "This stage does not assign liability."
+          ]
+        },
+        "continuity": {
+          "relationship_exists": true,
+          "relationship_type": "selected_relationship_type",
+          "continuity_density": "low|medium|high",
+          "pattern_stability": "low|medium|high",
+          "reliance_history": "low|medium|high",
+          "counter_signals_present": false,
+          "continuity_notes": [
+            "Continuity frames relation-conduct structuring but does not itself determine liability."
+          ]
+        },
+        "inputs": [
+          "recorded_world_material"
+        ],
+        "operations": [
+          "signal intake",
+          "imputation",
+          "relation_conduct_structuring",
+          "slot_population"
+        ],
+        "outputs": [
+          "constructed_legal_object"
+        ],
+        "allowed_next_states": [
+          "P2-S2"
+        ]
+      },
+      {
+        "state_id": "P2-S2",
+        "state_name": "Claim Trigger Filed",
+        "layer": "system_entry",
+        "entry_operator": "A_c",
+        "operator_type": "trigger",
+        "control_function_family": "entry",
+        "output_type": "trigger",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "constructed_legal_object"
+        ],
+        "outputs": [
+          "claim_trigger"
+        ],
+        "allowed_next_states": [
+          "P2-S3"
+        ]
+      },
+      {
+        "state_id": "P2-S3",
+        "state_name": "Recognition / Cognizability Threshold",
+        "layer": "system_entry",
+        "entry_operator": "USE_reasoning_recognition",
+        "operator_type": "reasoning",
+        "control_function_family": "recognition",
+        "output_type": "constraint",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "signal": {
+          "signal_constructed_inside": "USE_reasoning_recognition",
+          "signal_type_family": "status_condition|volition_consent|use_activation",
+          "signal_profile": {
+            "strength": "medium",
+            "clarity": "medium|high",
+            "specificity": "medium|high",
+            "observability": "medium|high",
+            "consistency_with_pattern": "medium",
+            "commitment_level": "low|medium",
+            "contradictions_present": false,
+            "attenuation": "low|medium"
+          },
+          "signal_notes": [
+            "Recognition tests category validity, not truth of facts."
+          ]
+        },
+        "inputs": [
+          "constructed_legal_object"
+        ],
+        "outputs": [
+          "recognition_decision_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S4"
+        ]
+      },
+      {
+        "state_id": "P2-S4",
+        "state_name": "Recognition Committed",
+        "layer": "system",
+        "entry_operator": "USAGE_recognition",
+        "operator_type": "instantiation",
+        "control_function_family": "recognition",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "recognition_decision_candidate"
+        ],
+        "outputs": [
+          "recognition_record"
+        ],
+        "allowed_next_states": [
+          "P2-S5"
+        ]
+      },
+      {
+        "state_id": "P2-S5",
+        "state_name": "Z2 Recognition Audit",
+        "layer": "system",
+        "entry_operator": "Z2_recognition",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "recognition_record"
+        ],
+        "za_evaluation": {
+          "evaluates_signal_against_continuity": false,
+          "signal_strength_factors": [
+            "category_compatibility",
+            "non_speculative_structure",
+            "relation_conduct_coherence"
+          ],
+          "continuity_resistance_factors": [],
+          "doctrinal_threshold_factors": [
+            "valid_legal_category_exists",
+            "correct_claim_type_classification"
+          ],
+          "threshold_question": "was_the_claim_lawfully_recognized",
+          "threshold_result": "not_evaluated"
+        },
+        "outputs": [
+          "recognized_claim_validated_or_invalidated"
+        ],
+        "allowed_next_states": [
+          "P2-S6"
+        ]
+      },
+      {
+        "state_id": "P2-S6",
+        "state_name": "Plausibility Threshold",
+        "layer": "system_entry",
+        "entry_operator": "USE_reasoning_plausibility",
+        "operator_type": "reasoning",
+        "control_function_family": "plausibility",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "signal": {
+          "signal_constructed_inside": "USE_reasoning_plausibility",
+          "signal_type_family": "causation|reliance_expectation|use_activation",
+          "signal_profile": {
+            "strength": "low|medium|high",
+            "clarity": "low|medium|high",
+            "specificity": "medium|high",
+            "observability": "medium|high",
+            "consistency_with_pattern": "low|medium|high",
+            "commitment_level": "low|medium",
+            "contradictions_present": false,
+            "attenuation": "low|medium|high"
+          },
+          "signal_notes": [
+            "Plausibility tests threshold-level inference only.",
+            "This stage does not resolve factual disputes."
+          ]
+        },
+        "continuity": {
+          "relationship_exists": true,
+          "relationship_type": "selected_relationship_type",
+          "continuity_density": "low|medium|high",
+          "pattern_stability": "low|medium|high",
+          "reliance_history": "low|medium|high",
+          "counter_signals_present": false,
+          "continuity_notes": [
+            "Continuity informs plausibility but does not itself determine truth."
+          ]
+        },
+        "za_evaluation": {
+          "evaluates_signal_against_continuity": true,
+          "signal_strength_factors": [
+            "non_conclusory_factuality",
+            "element_anchoring",
+            "public_record_integration",
+            "reasonable_inference_of_liability"
+          ],
+          "continuity_resistance_factors": [
+            "counter_signals_present",
+            "pattern_instability",
+            "weak_relational_support"
+          ],
+          "doctrinal_threshold_factors": [
+            "speculation_boundary",
+            "doctrinal_operativity",
+            "basic_coherence_check"
+          ],
+          "threshold_question": "do_the_alleged_facts_plausibly_justify_proceeding",
+          "threshold_result": "not_evaluated"
+        },
+        "inputs": [
+          "recognition_record"
+        ],
+        "outputs": [
+          "plausibility_decision_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S7"
+        ]
+      },
+      {
+        "state_id": "P2-S7",
+        "state_name": "Threshold Ruling Committed",
+        "layer": "system",
+        "entry_operator": "USAGE_threshold_ruling",
+        "operator_type": "instantiation",
+        "control_function_family": "plausibility",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "plausibility_decision_candidate"
+        ],
+        "outputs": [
+          "threshold_ruling_record"
+        ],
+        "allowed_next_states": [
+          "P2-S8"
+        ]
+      },
+      {
+        "state_id": "P2-S8",
+        "state_name": "Z2 Plausibility Audit",
+        "layer": "system",
+        "entry_operator": "Z2_plausibility",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "threshold_ruling_record"
+        ],
+        "outputs": [
+          "plausibility_validated_or_invalidated"
+        ],
+        "allowed_next_states": [
+          "P2-S9"
+        ]
+      },
+      {
+        "state_id": "P2-S9",
+        "state_name": "Adjudicative Authorization",
+        "layer": "system",
+        "entry_operator": "W1",
+        "operator_type": "authorization",
+        "control_function_family": "constraint",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "recognition_record",
+          "threshold_ruling_record"
+        ],
+        "outputs": [
+          "adjudicative_authorization"
+        ],
+        "allowed_next_states": [
+          "P2-S10"
+        ]
+      },
+      {
+        "state_id": "P2-S10",
+        "state_name": "Inference Space Authorization Reasoning",
+        "layer": "system",
+        "entry_operator": "USE_reasoning_authorization",
+        "operator_type": "reasoning",
+        "control_function_family": "constraint",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "signal": {
+          "signal_constructed_inside": "USE_reasoning_authorization",
+          "signal_type_family": "authority|reasonableness_proportionality|procedural_legitimacy",
+          "signal_profile": {
+            "strength": "medium|high",
+            "clarity": "high",
+            "specificity": "high",
+            "observability": "high",
+            "consistency_with_pattern": "medium|high",
+            "commitment_level": "medium",
+            "contradictions_present": false,
+            "attenuation": "low"
+          },
+          "signal_notes": [
+            "Defines permissible inference space for M1."
+          ]
+        },
+        "inputs": [
+          "adjudicative_authorization"
+        ],
+        "outputs": [
+          "authorized_inference_space_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S11"
+        ]
+      },
+      {
+        "state_id": "P2-S11",
+        "state_name": "Inference Space Committed",
+        "layer": "system",
+        "entry_operator": "USAGE_authorization",
+        "operator_type": "instantiation",
+        "control_function_family": "constraint",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "authorized_inference_space_candidate"
+        ],
+        "outputs": [
+          "authorization_record"
+        ],
+        "allowed_next_states": [
+          "P2-S12",
+          "P2-S13",
+          "P2-S14"
+        ]
+      },
+      {
+        "state_id": "P2-S12",
+        "state_name": "Discovery / Record Construction",
+        "layer": "system_pre_M1",
+        "entry_operator": "USE_reasoning_discovery",
+        "operator_type": "reasoning",
+        "control_function_family": "entry",
+        "output_type": "constructive",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "authorization_record"
+        ],
+        "outputs": [
+          "expanded_record_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S12A",
+          "P2-S13"
+        ]
+      },
+      {
+        "state_id": "P2-S12A",
+        "state_name": "Discovery Order Committed",
+        "layer": "system_pre_M1",
+        "entry_operator": "USAGE_discovery_order",
+        "operator_type": "instantiation",
+        "control_function_family": "entry",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "expanded_record_candidate"
+        ],
+        "outputs": [
+          "expanded_record"
+        ],
+        "allowed_next_states": [
+          "P2-S13"
+        ]
+      },
+      {
+        "state_id": "P2-S13",
+        "state_name": "Evidentiary Admissibility Gate",
+        "layer": "system_pre_M1",
+        "entry_operator": "USE_reasoning_evidentiary_admission",
+        "operator_type": "reasoning",
+        "control_function_family": "admissibility",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "expanded_record",
+          "authorization_record"
+        ],
+        "outputs": [
+          "admissibility_decision_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S13A"
+        ]
+      },
+      {
+        "state_id": "P2-S13A",
+        "state_name": "Evidence Ruling Committed",
+        "layer": "system_pre_M1",
+        "entry_operator": "USAGE_evidence_ruling",
+        "operator_type": "instantiation",
+        "control_function_family": "admissibility",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "admissibility_decision_candidate"
+        ],
+        "outputs": [
+          "admissible_evidence_field"
+        ],
+        "allowed_next_states": [
+          "P2-S14"
+        ]
+      },
+      {
+        "state_id": "P2-S14",
+        "state_name": "Merits Screening",
+        "layer": "system_pre_M1",
+        "entry_operator": "USE_reasoning_summary_judgment",
+        "operator_type": "reasoning",
+        "control_function_family": "merits_screening",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "admissible_evidence_field"
+        ],
+        "outputs": [
+          "summary_judgment_decision_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S14A"
+        ]
+      },
+      {
+        "state_id": "P2-S14A",
+        "state_name": "Summary Judgment Committed",
+        "layer": "system_pre_M1",
+        "entry_operator": "USAGE_summary_judgment",
+        "operator_type": "instantiation",
+        "control_function_family": "merits_screening",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "summary_judgment_decision_candidate"
+        ],
+        "outputs": [
+          "summary_judgment_record"
+        ],
+        "allowed_next_states": [
+          "P2-S15"
+        ]
+      },
+      {
+        "state_id": "P2-S15",
+        "state_name": "Z2 Merits Audit",
+        "layer": "system_pre_M1",
+        "entry_operator": "Z2_merits",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "summary_judgment_record"
+        ],
+        "outputs": [
+          "triable_or_nontriable_case"
+        ],
+        "allowed_next_states": [
+          "P2-S16"
+        ]
+      },
+      {
+        "state_id": "P2-S16",
+        "state_name": "Verdict Reasoning Chamber",
+        "layer": "system_trial",
+        "entry_operator": "USE_reasoning_verdict",
+        "operator_type": "reasoning",
+        "control_function_family": "factfinding",
+        "output_type": "constructive",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "signal": {
+          "signal_constructed_inside": "M1",
+          "signal_type_family": "selected_signal_type_family",
+          "signal_profile": {
+            "strength": "low|medium|high",
+            "clarity": "low|medium|high",
+            "specificity": "low|medium|high",
+            "observability": "low|medium|high",
+            "consistency_with_pattern": "low|medium|high",
+            "commitment_level": "low|medium|high",
+            "contradictions_present": false,
+            "attenuation": "low|medium|high"
+          },
+          "signal_notes": [
+            "M1 is the first stage where full inference occurs.",
+            "M1 constructs candidate State-Event Transition Structures and selects one."
+          ]
+        },
+        "continuity": {
+          "relationship_exists": true,
+          "relationship_type": "selected_relationship_type",
+          "continuity_density": "low|medium|high",
+          "pattern_stability": "low|medium|high",
+          "reliance_history": "low|medium|high",
+          "counter_signals_present": false,
+          "continuity_notes": [
+            "Continuity interacts with M1 but does not itself decide the outcome."
+          ]
+        },
+        "internal_structure": {
+          "M1": {
+            "function": "construct_candidate_State_Event_Transition_Structures_and_select_one",
+            "operations": [
+              "grouping",
+              "sequencing",
+              "transition_mapping",
+              "gap_detection",
+              "candidate_construction",
+              "consistency_testing",
+              "comparative_evaluation",
+              "selection"
+            ]
+          },
+          "M2": {
+            "function": "assign_doctrinal_meaning_to_selected_State_Event_Transition_Structure",
+            "operations": [
+              "relation_expectation_formation",
+              "comparison",
+              "X2b1_calibration",
+              "X2b2_conversion",
+              "doctrinal_output_generation",
+              "constraint_limitation"
+            ]
+          }
+        },
+        "inputs": [
+          "admissible_evidence_field",
+          "authorization_record"
+        ],
+        "outputs": [
+          "verdict_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S17"
+        ]
+      },
+      {
+        "state_id": "P2-S17",
+        "state_name": "Verdict Committed",
+        "layer": "system_trial",
+        "entry_operator": "USAGE_verdict",
+        "operator_type": "instantiation",
+        "control_function_family": "classification",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "verdict_candidate"
+        ],
+        "outputs": [
+          "verdict_record"
+        ],
+        "allowed_next_states": [
+          "P2-S18"
+        ]
+      },
+      {
+        "state_id": "P2-S18",
+        "state_name": "Z2 Verdict Audit",
+        "layer": "system_trial",
+        "entry_operator": "Z2_verdict",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "verdict_record"
+        ],
+        "outputs": [
+          "verdict_validated_or_invalidated"
+        ],
+        "allowed_next_states": [
+          "P2-S19"
+        ]
+      },
+      {
+        "state_id": "P2-S19",
+        "state_name": "Remedy Authorization",
+        "layer": "system_post_verdict",
+        "entry_operator": "W2",
+        "operator_type": "authorization",
+        "control_function_family": "constraint",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "verdict_record"
+        ],
+        "outputs": [
+          "remedy_authorization"
+        ],
+        "allowed_next_states": [
+          "P2-S20"
+        ]
+      },
+      {
+        "state_id": "P2-S20",
+        "state_name": "Remedy Reasoning",
+        "layer": "system_post_verdict",
+        "entry_operator": "USE_reasoning_remedy",
+        "operator_type": "reasoning",
+        "control_function_family": "classification",
+        "output_type": "constructive",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "remedy_authorization",
+          "verdict_record"
+        ],
+        "outputs": [
+          "remedy_candidate"
+        ],
+        "allowed_next_states": [
+          "P2-S21"
+        ]
+      },
+      {
+        "state_id": "P2-S21",
+        "state_name": "Remedy Committed",
+        "layer": "system_post_verdict",
+        "entry_operator": "USAGE_remedy",
+        "operator_type": "instantiation",
+        "control_function_family": "classification",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "remedy_candidate"
+        ],
+        "outputs": [
+          "remedy_record"
+        ],
+        "allowed_next_states": [
+          "P2-S22"
+        ]
+      },
+      {
+        "state_id": "P2-S22",
+        "state_name": "Z2 Remedy Audit",
+        "layer": "system_post_verdict",
+        "entry_operator": "Z2_remedy",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "remedy_record"
+        ],
+        "outputs": [
+          "remedy_supported_or_unsupported"
+        ],
+        "allowed_next_states": [
+          "P2-S23"
+        ]
+      },
+      {
+        "state_id": "P2-S23",
+        "state_name": "Judgment Formation",
+        "layer": "system_post_verdict",
+        "entry_operator": "USAGE_judgment",
+        "operator_type": "instantiation",
+        "control_function_family": "classification",
+        "output_type": "constructive",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "verdict_record",
+          "remedy_record"
+        ],
+        "outputs": [
+          "judgment_record"
+        ],
+        "allowed_next_states": [
+          "P2-S24"
+        ]
+      },
+      {
+        "state_id": "P2-S24",
+        "state_name": "Z2 Judgment Audit",
+        "layer": "system_post_verdict",
+        "entry_operator": "Z2_judgment",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "judgment_record"
+        ],
+        "outputs": [
+          "judgment_supported_or_unsupported"
+        ],
+        "allowed_next_states": [
+          "P2-S25"
+        ]
+      },
+      {
+        "state_id": "P2-S25",
+        "state_name": "Outcome Evaluation",
+        "layer": "system_post_judgment",
+        "entry_operator": "Z3",
+        "operator_type": "evaluation",
+        "control_function_family": "acceptability",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "za_evaluation": {
+          "evaluates_signal_against_continuity": true,
+          "signal_strength_factors": [
+            "proportionality_of_remedy",
+            "fairness_of_burden_imposed",
+            "avoidance_of_over_or_under_compensation"
+          ],
+          "continuity_resistance_factors": [
+            "relational_balance",
+            "countervailing_equities"
+          ],
+          "doctrinal_threshold_factors": [
+            "within_legal_authority",
+            "procedural_correctness",
+            "doctrinal_consistency",
+            "enforceability_limits"
+          ],
+          "threshold_question": "is_the_completed_outcome_acceptable",
+          "threshold_result": "not_evaluated"
+        },
+        "inputs": [
+          "judgment_record"
+        ],
+        "outputs": [
+          "outcome_acceptable_or_unacceptable"
+        ],
+        "allowed_next_states": [
+          "P2-S26",
+          "P2-S27"
+        ]
+      },
+      {
+        "state_id": "P2-S26",
+        "state_name": "System-Level Review",
+        "layer": "system_review",
+        "entry_operator": "ZZ",
+        "operator_type": "evaluation",
+        "control_function_family": "review",
+        "output_type": "mixed",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "recognition_record",
+          "threshold_ruling_record",
+          "authorization_record",
+          "summary_judgment_record",
+          "verdict_record",
+          "remedy_record",
+          "judgment_record"
+        ],
+        "outputs": [
+          "appellate_or_supervisory_result"
+        ],
+        "allowed_next_states": [
+          "P2-S27",
+          "P2-FAIL-REMAND",
+          "P2-FAIL-REVERSAL"
+        ]
+      },
+      {
+        "state_id": "P2-S27",
+        "state_name": "Enforcement Authorization",
+        "layer": "system_enforcement",
+        "entry_operator": "We",
+        "operator_type": "authorization",
+        "control_function_family": "constraint",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "judgment_record"
+        ],
+        "outputs": [
+          "enforcement_authorization"
+        ],
+        "allowed_next_states": [
+          "P2-S28"
+        ]
+      },
+      {
+        "state_id": "P2-S28",
+        "state_name": "Enforcement Committed",
+        "layer": "system_enforcement",
+        "entry_operator": "USAGE_e",
+        "operator_type": "instantiation",
+        "control_function_family": "classification",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "enforcement_authorization"
+        ],
+        "outputs": [
+          "enforcement_record"
+        ],
+        "allowed_next_states": [
+          "P2-S29"
+        ]
+      },
+      {
+        "state_id": "P2-S29",
+        "state_name": "Judgment Executed",
+        "layer": "world_execution",
+        "entry_operator": "USE_world",
+        "operator_type": "execution",
+        "control_function_family": "entry",
+        "output_type": "world",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "enforcement_record"
+        ],
+        "outputs": [
+          "world_altered_state"
+        ],
+        "allowed_next_states": [
+          "P1-S4",
+          "P2-TERMINAL"
+        ]
+      }
+    ],
+    "failure_states": [
+      {
+        "state_id": "P2-FAIL-L",
+        "state_name": "No Cognizable Claim",
+        "result": "category_or_structure_failure"
+      },
+      {
+        "state_id": "P2-FAIL-T1",
+        "state_name": "Claim Not Plausibly Supported",
+        "result": "threshold_failure"
+      },
+      {
+        "state_id": "P2-FAIL-MERITS",
+        "state_name": "No Legally Valid Verdict Could Exist",
+        "result": "summary_judgment_termination"
+      },
+      {
+        "state_id": "P2-FAIL-REMAND",
+        "state_name": "Remand Ordered",
+        "result": "return_for_further_proceedings"
+      },
+      {
+        "state_id": "P2-FAIL-REVERSAL",
+        "state_name": "Reversal Ordered",
+        "result": "judgment_not_enforceable"
+      }
+    ],
+    "terminal_state": {
+      "state_id": "P2-TERMINAL",
+      "state_name": "Unchallenged Execution Complete",
+      "result": "system_cycle_complete"
+    }
+  },
+  "path_1_coercive": {
+    "name": "Coercive Pipeline",
+    "description": "allegation -> probable cause -> institutional instantiation -> execution -> suppression review",
+    "states": [
+      {
+        "state_id": "P1-S0",
+        "state_name": "World Facts Recorded",
+        "layer": "world",
+        "entry_operator": "O_P_R",
+        "operator_type": "world_observation",
+        "control_function_family": "entry",
+        "output_type": "world",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "real_world_events",
+          "observable_conditions"
+        ],
+        "outputs": [
+          "recorded_world_material"
+        ],
+        "allowed_next_states": [
+          "P1-S1"
+        ]
+      },
+      {
+        "state_id": "P1-S1",
+        "state_name": "Actionable Allegation Triggered",
+        "layer": "system_entry",
+        "entry_operator": "Aa",
+        "operator_type": "trigger",
+        "control_function_family": "entry",
+        "output_type": "trigger",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "recorded_world_material"
+        ],
+        "outputs": [
+          "coercive_initiation_trigger"
+        ],
+        "allowed_next_states": [
+          "P1-S2"
+        ]
+      },
+      {
+        "state_id": "P1-S2",
+        "state_name": "Probable Cause Threshold",
+        "layer": "system_entry",
+        "entry_operator": "USE_reasoning_probable_cause",
+        "operator_type": "reasoning",
+        "control_function_family": "sufficiency",
+        "output_type": "constraint",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": false,
+        "signal": {
+          "signal_constructed_inside": "USE_reasoning_probable_cause",
+          "signal_type_family": "status_condition|authority|use_activation",
+          "signal_profile": {
+            "strength": "medium|high",
+            "clarity": "medium|high",
+            "specificity": "medium|high",
+            "observability": "medium|high",
+            "consistency_with_pattern": "low|medium",
+            "commitment_level": "medium|high",
+            "contradictions_present": false,
+            "attenuation": "low|medium"
+          },
+          "signal_notes": [
+            "Probable cause is a compressed coherence and justification check."
+          ]
+        },
+        "inputs": [
+          "coercive_initiation_trigger"
+        ],
+        "outputs": [
+          "probable_cause_decision_candidate"
+        ],
+        "allowed_next_states": [
+          "P1-S3"
+        ]
+      },
+      {
+        "state_id": "P1-S3",
+        "state_name": "Warrant / Exception Committed",
+        "layer": "system",
+        "entry_operator": "USAGE_warrant",
+        "operator_type": "instantiation",
+        "control_function_family": "classification",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "probable_cause_decision_candidate"
+        ],
+        "outputs": [
+          "coercive_authority_record"
+        ],
+        "allowed_next_states": [
+          "P1-S4"
+        ]
+      },
+      {
+        "state_id": "P1-S4",
+        "state_name": "Coercive Authority Executed",
+        "layer": "world_execution",
+        "entry_operator": "USE_world",
+        "operator_type": "execution",
+        "control_function_family": "entry",
+        "output_type": "world",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "coercive_authority_record"
+        ],
+        "outputs": [
+          "executed_coercive_output",
+          "world_altered_state"
+        ],
+        "allowed_next_states": [
+          "P1-S5",
+          "P2-S0"
+        ]
+      },
+      {
+        "state_id": "P1-S5",
+        "state_name": "Coercive Legality Review",
+        "layer": "system_review",
+        "entry_operator": "USE_reasoning_coercive_legality",
+        "operator_type": "reasoning",
+        "control_function_family": "constraint",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "executed_coercive_output",
+          "coercive_authority_record"
+        ],
+        "outputs": [
+          "suppression_decision_candidate"
+        ],
+        "allowed_next_states": [
+          "P1-S6"
+        ]
+      },
+      {
+        "state_id": "P1-S6",
+        "state_name": "Suppression Ruling Committed",
+        "layer": "system_review",
+        "entry_operator": "USAGE_suppression",
+        "operator_type": "instantiation",
+        "control_function_family": "constraint",
+        "output_type": "constructive",
+        "requires_prior_instantiation": false,
+        "creates_institutional_artifact": true,
+        "inputs": [
+          "suppression_decision_candidate"
+        ],
+        "outputs": [
+          "suppression_record"
+        ],
+        "allowed_next_states": [
+          "P1-S7"
+        ]
+      },
+      {
+        "state_id": "P1-S7",
+        "state_name": "Z2 Authority Audit",
+        "layer": "system_review",
+        "entry_operator": "Z2_authority",
+        "operator_type": "evaluation",
+        "control_function_family": "support_validation",
+        "output_type": "constraint",
+        "requires_prior_instantiation": true,
+        "creates_institutional_artifact": false,
+        "inputs": [
+          "suppression_record"
+        ],
+        "outputs": [
+          "authority_validated_or_invalidated"
+        ],
+        "allowed_next_states": [
+          "P2-S0",
+          "P1-TERMINAL"
+        ]
+      }
+    ],
+    "terminal_state": {
+      "state_id": "P1-TERMINAL",
+      "state_name": "Coercive Pipeline Complete",
+      "result": "coercive_flow_closed_or_routed_into_path_2"
+    }
+  },
+  "cross_path_invariants": [
+    "Path 1 outputs may become Path 2 inputs only through admissibility and authority review.",
+    "Suppression is an institutional ruling that determines whether Path 1 product may be used in Path 2.",
+    "W1 defines what reasoning is allowed; M1 performs reasoning within that space.",
+    "E1 determines what M1 is allowed to see; it does not determine what M1 must conclude.",
+    "Z2[merits] sits before M1 and M2 and determines whether trial is necessary at all.",
+    "Z2[verdict] audits actual verdict support; Z2[merits] audits hypothetical verdict possibility.",
+    "Z2[remedy] extends sufficiency review into consequence support.",
+    "Z2[judgment] extends sufficiency review into instrument coherence.",
+    "Z3 evaluates acceptability, not support.",
+    "ZZ evaluates system-level correctness, not liability creation."
+  ]
+}
+
