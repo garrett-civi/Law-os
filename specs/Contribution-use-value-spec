@@ -1,0 +1,462 @@
+JSON
+{
+  "schema_name": "canonical_use_allocation_spec",
+  "version": "0.2.0",
+  "description": "Canonical schema organized in the user's full sequence: Contribution -> Classification -> Use -> Benefit -> Retention -> Claim. This schema is the technical-operational encoding of that grammar and is designed to support deterministic traceability where available, classification where needed, benefit/retention analysis, and downstream claim formation.",
+  "grammar_alignment": {
+    "canonical_sequence": [
+      "Contribution",
+      "Classification",
+      "Use",
+      "Benefit",
+      "Retention",
+      "Claim"
+    ],
+    "populist_translation_layer": {
+      "Contribution": "We contribute.",
+      "Classification": "They organize it.",
+      "Use": "They use it.",
+      "Benefit": "It creates value.",
+      "Retention": "They keep the value.",
+      "Claim": "So we have a claim."
+    }
+  },
+  "purpose": {
+    "primary_function": "Track contribution, classification, use, benefit creation, retained benefit, and claim formation in a single canonical sequence.",
+    "design_position": "Pre-legal, quasi-legal, and legal-handoff operational layer",
+    "relationship_to_legal_operator_schema": "Feeds claim-ready records into a separate legal recognition, adjudication, remedy, and enforcement schema."
+  },
+  "operator_semantics": {
+    "REGISTER": "records a contribution object and baseline status",
+    "CLASSIFY": "types, structures, labels, groups, embeds, or otherwise organizes contribution into usable form",
+    "TRACE_USE": "records an identifiable use event involving one or more classified contributions",
+    "REALIZE_BENEFIT": "records direct or indirect value created through use",
+    "ASSESS_RETENTION": "determines whether benefit was kept, shared, returned, limited, or withheld",
+    "FORM_CLAIM": "packages contribution, classification, use, benefit, and retention into a claim-ready record"
+  },
+  "core_invariants": [
+    "Contribution is analytically distinct from classification.",
+    "Classification is required whenever raw inputs must be turned into usable typed structure, even where inputs are directly observed.",
+    "Use is distinct from mere presence or storage.",
+    "Benefit is distinct from retention.",
+    "Retention is the keeping of benefit, not merely the existence of benefit.",
+    "Claim pressure arises most sharply at retention, not at use alone.",
+    "Deterministic traceability reduces later reconstruction but does not eliminate the need for classification.",
+    "Legacy systems may preserve fragments of traceability without preserving the full chain.",
+    "A contribution may be directly traceable, inferentially reconstructable, or both.",
+    "A contribution may participate in multiple classifications, multiple uses, multiple benefits, and multiple claims.",
+    "A claim may be economically intelligible before it is legally enforceable.",
+    "This schema does not itself determine liability; it structures the claim field for later legal or institutional processing."
+  ],
+  "traceability_semantics": {
+    "deterministic_traceability": "The system directly records the relevant link or event in a stable and reviewable form.",
+    "classification_needed": "The system must convert recorded or observed material into typed usable structure.",
+    "inferential_reconstruction": "The system must reconstruct missing links because the chain was not instrumented from the start."
+  },
+  "status_semantics": {
+    "traceability_status": [
+      "directly_traced",
+      "partially_traced",
+      "inferentially_reconstructed",
+      "mixed",
+      "unknown"
+    ],
+    "authorization_status": [
+      "authorized",
+      "partially_authorized",
+      "unauthorized",
+      "disputed",
+      "unknown"
+    ],
+    "benefit_status": [
+      "not_evaluated",
+      "no_identifiable_benefit",
+      "direct_benefit",
+      "indirect_benefit",
+      "mixed_benefit",
+      "disputed"
+    ],
+    "retention_status": [
+      "not_evaluated",
+      "no_retention",
+      "temporary_retention",
+      "ongoing_retention",
+      "partial_return",
+      "shared_benefit",
+      "withheld_return",
+      "disputed"
+    ],
+    "claim_status": [
+      "not_formed",
+      "candidate",
+      "drafted",
+      "asserted",
+      "under_review",
+      "negotiation",
+      "disputed",
+      "settled",
+      "adjudicated",
+      "rejected"
+    ]
+  },
+  "shared_schema_fragments": {
+    "provenance_fragment": {
+      "source_system": "string",
+      "source_location": "string",
+      "source_record_reference": "string",
+      "collection_method": "upload|license|api|scrape|manual_entry|ingestion_pipeline|other",
+      "capture_timestamp": "ISO_8601_timestamp",
+      "provenance_confidence": "low|medium|high",
+      "provenance_notes": []
+    },
+    "authorization_fragment": {
+      "authorization_basis": "express_license|terms_of_service|employment|vendor_agreement|public_access|public_domain|fair_use_asserted|none|disputed|unknown",
+      "authorization_status": "authorized|partially_authorized|unauthorized|disputed|unknown",
+      "authorized_uses": [],
+      "prohibited_uses": [],
+      "conditional_uses": [],
+      "attribution_required": true,
+      "compensation_required": false,
+      "geographic_limitations": [],
+      "temporal_limitations": [],
+      "authorization_notes": []
+    },
+    "traceability_fragment": {
+      "traceability_status": "directly_traced|partially_traced|inferentially_reconstructed|mixed|unknown",
+      "traceability_basis": "system_log|lineage_graph|contract_record|manual_reconstruction|model_estimate|hybrid|unknown",
+      "traceability_confidence": "low|medium|high",
+      "traceability_notes": []
+    },
+    "score_fragment": {
+      "score_value": 0.0,
+      "score_min": 0.0,
+      "score_max": 1.0,
+      "score_confidence": "low|medium|high",
+      "score_explanation": "string"
+    },
+    "economic_measure_fragment": {
+      "amount": 0.0,
+      "currency": "USD",
+      "measurement_basis": "recognized_revenue|booked_revenue|estimated_revenue|cost_savings|market_value|derived_value|strategic_value_estimate|other",
+      "measurement_confidence": "low|medium|high",
+      "measurement_notes": []
+    },
+    "lineage_fragment": {
+      "upstream_ids": [],
+      "downstream_ids": [],
+      "chain_position": "root|intermediate|terminal",
+      "lineage_confidence": "low|medium|high",
+      "lineage_notes": []
+    },
+    "dispute_fragment": {
+      "dispute_flag": false,
+      "dispute_type": "none|authorship|classification|authorization|use|benefit|retention|claim_amount|payment|other",
+      "dispute_summary": "string",
+      "dispute_notes": []
+    }
+  },
+  "module_families": {
+    "contribution": {
+      "module_description": "Registry of identifiable contributions and baseline source state.",
+      "module_invariants": [
+        "Each contribution must have a stable contribution_id.",
+        "A contribution may be traced directly, reconstructed inferentially, or both.",
+        "A contribution may be registered even when authorization is disputed or unknown."
+      ],
+      "record_schema": {
+        "contribution_id": "string",
+        "contribution_type": "dataset|row|column|document|text|image|video|audio|code|metadata|label|annotation|prompt|embedding_source|relationship_signal|other",
+        "contribution_subtype": "string",
+        "title_or_label": "string",
+        "description": "string",
+        "originator_ids": [],
+        "custodian_id": "string",
+        "beneficial_claimant_ids": [],
+        "unit_of_account": "record|file|document|asset|dataset|signal_cluster|other",
+        "provenance": {
+          "$ref": "#/shared_schema_fragments/provenance_fragment"
+        },
+        "authorization": {
+          "$ref": "#/shared_schema_fragments/authorization_fragment"
+        },
+        "traceability": {
+          "$ref": "#/shared_schema_fragments/traceability_fragment"
+        },
+        "identity_attributes": {
+          "hashes": [],
+          "fingerprints": [],
+          "deduplication_keys": [],
+          "external_references": []
+        },
+        "lineage": {
+          "$ref": "#/shared_schema_fragments/lineage_fragment"
+        },
+        "commercial_attributes": {
+          "has_existing_rate_card": false,
+          "existing_rate_reference": "string",
+          "known_compensation_terms": [],
+          "known_attribution_terms": []
+        },
+        "risk_flags": {
+          "contains_sensitive_content": false,
+          "contains_personal_data": false,
+          "contains_third_party_data": false,
+          "rights_uncertainty": "low|medium|high"
+        },
+        "record_status": "active|inactive|superseded|archived|disputed",
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    },
+    "classification": {
+      "module_description": "Layer that turns contribution into usable typed structure through labeling, grouping, transformation, embedding, profiling, or other organizational acts.",
+      "module_invariants": [
+        "Classification is not limited to uncertain situations.",
+        "Classification may be deterministic, contestable, or mixed.",
+        "Classification may itself be a source of later dispute.",
+        "A contribution may undergo multiple classifications over time."
+      ],
+      "classification_mode_semantics": {
+        "deterministic": "classification directly assigned by recorded rule or system mapping",
+        "contestable": "multiple plausible classifications may be argued or selected",
+        "mixed": "some features are directly assigned while others remain contestable"
+      },
+      "record_schema": {
+        "classification_id": "string",
+        "contribution_id": "string",
+        "classification_event_type": "labeling|tagging|grouping|profiling|embedding|vectorization|deduplication|ranking|filtering|typing|other",
+        "classification_mode": "deterministic|contestable|mixed",
+        "classifier_id": "string",
+        "classifier_type": "human|rule_engine|model|pipeline|hybrid|other",
+        "input_state_reference": "string",
+        "output_state_reference": "string",
+        "classification_output": {
+          "assigned_labels": [],
+          "assigned_groups": [],
+          "assigned_types": [],
+          "embedding_reference": "string",
+          "feature_output_references": []
+        },
+        "selection_rationale": "string",
+        "candidate_classifications": [],
+        "selected_classification": "string",
+        "traceability": {
+          "$ref": "#/shared_schema_fragments/traceability_fragment"
+        },
+        "authorization_relevance": {
+          "changes_use_permissions": false,
+          "changes_value_profile": false,
+          "changes_attribution_requirements": false,
+          "notes": []
+        },
+        "lineage": {
+          "$ref": "#/shared_schema_fragments/lineage_fragment"
+        },
+        "dispute": {
+          "$ref": "#/shared_schema_fragments/dispute_fragment"
+        },
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    },
+    "use": {
+      "module_description": "Ledger of identifiable uses of classified contributions.",
+      "module_invariants": [
+        "Use is distinct from storage or passive presence.",
+        "A use record must identify the contribution or classified state being used.",
+        "Use may be directly traced or reconstructively inferred."
+      ],
+      "use_event_type_semantics": {
+        "access": "retrieval or read event without confirmed transformation",
+        "query": "analytic or search operation over classified material",
+        "join_merge": "combination with other data or content",
+        "training": "use to train a model",
+        "fine_tuning": "use to adapt or refine a model",
+        "embedding_consumption": "use of vectorized or embedded form",
+        "inference": "runtime use of prior trained or classified artifacts",
+        "feature_generation": "use to create scores, features, or product functions",
+        "derivative_output_generation": "use to create downstream outputs or works",
+        "distribution": "delivery or external sharing of outputs built from contribution",
+        "internal_analytics": "internal organizational use",
+        "other": "custom typed use"
+      },
+      "record_schema": {
+        "use_event_id": "string",
+        "use_event_type": "access|query|join_merge|training|fine_tuning|embedding_consumption|inference|feature_generation|derivative_output_generation|distribution|internal_analytics|other",
+        "event_label": "string",
+        "timestamp_start": "ISO_8601_timestamp",
+        "timestamp_end": "ISO_8601_timestamp",
+        "source_contribution_ids": [],
+        "source_classification_ids": [],
+        "system_id": "string",
+        "system_type": "warehouse|lakehouse|model_pipeline|application|api|analytics_stack|human_workflow|other",
+        "operator_id": "string",
+        "operator_type": "human|service_account|scheduled_job|model|api_client|other",
+        "transformation_description": "string",
+        "execution_context": {
+          "environment": "dev|test|staging|prod|other",
+          "job_id": "string",
+          "query_id": "string",
+          "model_id": "string",
+          "pipeline_id": "string"
+        },
+        "output_object_ids": [],
+        "intensity_measures": {
+          "records_touched": 0,
+          "bytes_processed": 0,
+          "compute_units": 0.0,
+          "duration_seconds": 0.0,
+          "request_count": 0
+        },
+        "traceability": {
+          "$ref": "#/shared_schema_fragments/traceability_fragment"
+        },
+        "authorization_snapshot": {
+          "authorization_status_used": "authorized|partially_authorized|unauthorized|disputed|unknown",
+          "override_reference": "string",
+          "notes": []
+        },
+        "lineage": {
+          "$ref": "#/shared_schema_fragments/lineage_fragment"
+        },
+        "dispute": {
+          "$ref": "#/shared_schema_fragments/dispute_fragment"
+        },
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    },
+    "benefit": {
+      "module_description": "Layer that records value created through use.",
+      "module_invariants": [
+        "Benefit is not yet retention.",
+        "Benefit may be direct, indirect, mixed, or disputed.",
+        "Benefit may be recognized, projected, retained, or partly realized."
+      ],
+      "benefit_type_semantics": {
+        "direct_revenue": "sales, subscriptions, licensing, or fees directly tied to output",
+        "indirect_revenue": "ad revenue, cross-sell, engagement retention, or secondary monetization",
+        "cost_savings": "reduced labor, reduced acquisition cost, reduced production cost",
+        "capability_gain": "improved model function, product quality, or operational performance",
+        "strategic_value": "market entry, speed, defensibility, leverage, or institutional advantage",
+        "retained_operational_benefit": "benefit held operationally before direct monetization"
+      },
+      "record_schema": {
+        "benefit_id": "string",
+        "benefit_type": "direct_revenue|indirect_revenue|cost_savings|capability_gain|strategic_value|retained_operational_benefit",
+        "related_use_event_ids": [],
+        "related_contribution_ids": [],
+        "related_classification_ids": [],
+        "output_object_id": "string",
+        "benefit_status": "not_evaluated|no_identifiable_benefit|direct_benefit|indirect_benefit|mixed_benefit|disputed",
+        "gross_benefit_value": {
+          "$ref": "#/shared_schema_fragments/economic_measure_fragment"
+        },
+        "net_benefit_value": {
+          "$ref": "#/shared_schema_fragments/economic_measure_fragment"
+        },
+        "valuation_window": {
+          "start": "ISO_8601_timestamp",
+          "end": "ISO_8601_timestamp"
+        },
+        "benefit_realization_state": "projected|estimated|recognized|retained|disputed",
+        "benefit_linkage_factors": {
+          "causal_proximity": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "temporal_proximity": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "output_dependence": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "commercial_realization_strength": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          }
+        },
+        "traceability": {
+          "$ref": "#/shared_schema_fragments/traceability_fragment"
+        },
+        "dispute": {
+          "$ref": "#/shared_schema_fragments/dispute_fragment"
+        },
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    },
+    "retention": {
+      "module_description": "Layer that determines whether and how benefit was kept, shared, returned, or withheld.",
+      "module_invariants": [
+        "Retention is the keeping of benefit after benefit arises.",
+        "Retention may be temporary, ongoing, partial, shared, withheld, or disputed.",
+        "Retention is the main pressure point for claim formation in this schema."
+      ],
+      "record_schema": {
+        "retention_id": "string",
+        "benefit_id": "string",
+        "related_use_event_ids": [],
+        "related_contribution_ids": [],
+        "holder_party_ids": [],
+        "retention_status": "not_evaluated|no_retention|temporary_retention|ongoing_retention|partial_return|shared_benefit|withheld_return|disputed",
+        "retention_window": {
+          "start": "ISO_8601_timestamp",
+          "end": "ISO_8601_timestamp"
+        },
+        "retained_value": {
+          "$ref": "#/shared_schema_fragments/economic_measure_fragment"
+        },
+        "shared_value": {
+          "$ref": "#/shared_schema_fragments/economic_measure_fragment"
+        },
+        "returned_value": {
+          "$ref": "#/shared_schema_fragments/economic_measure_fragment"
+        },
+        "retention_basis": "no_return_mechanism|contract_gap|policy_choice|ongoing_possession|active_withholding|disputed_obligation|unknown|other",
+        "continuity_profile": {
+          "is_ongoing": true,
+          "repeat_event_count": 0,
+          "pattern_stability": "low|medium|high",
+          "continuity_notes": []
+        },
+        "materiality_assessment": {
+          "frequency_score": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "dependency_score": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "substitutability_score": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "benefit_dependence_score": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "retention_significance_score": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          },
+          "composite_retention_score": {
+            "$ref": "#/shared_schema_fragments/score_fragment"
+          }
+        },
+        "traceability": {
+          "$ref": "#/shared_schema_fragments/traceability_fragment"
+        },
+        "dispute": {
+          "$ref": "#/shared_schema_fragments/dispute_fragment"
+        },
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    },
+    "claim": {
+      "module_description": "Claim formation layer that packages contribution, classification, use, benefit, and retention into a reviewable claim object.",
+      "module_invariants": [
+        "Claim is downstream of retention analysis in this schema.",
+        "A claim may exist before formal legal filing.",
+        "Multiple claim theories may attach to the same retained benefit pattern.",
+        "Claim formation does not 
