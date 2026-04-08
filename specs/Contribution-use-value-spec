@@ -459,4 +459,227 @@ JSON
         "Claim is downstream of retention analysis in this schema.",
         "A claim may exist before formal legal filing.",
         "Multiple claim theories may attach to the same retained benefit pattern.",
-        "Claim formation does not 
+        "Claim formation does not itself adjudicate the claim."
+      ],
+      "claim_type_semantics": {
+        "payment_claim": "claim for compensation, fee, royalty, or revenue share",
+        "return_claim": "claim for restitution, disgorgement, or return of retained value",
+        "attribution_claim": "claim for credit or acknowledgment",
+        "limitation_claim": "claim to restrict future use",
+        "governance_claim": "claim for oversight, consent, process, or approval rights",
+        "mixed_claim": "claim combining multiple forms"
+      },
+      "record_schema": {
+        "claim_id": "string",
+        "claim_type": "payment_claim|return_claim|attribution_claim|limitation_claim|governance_claim|mixed_claim",
+        "claim_status": "not_formed|candidate|drafted|asserted|under_review|negotiation|disputed|settled|adjudicated|rejected",
+        "included_contribution_ids": [],
+        "included_classification_ids": [],
+        "included_use_event_ids": [],
+        "included_benefit_ids": [],
+        "included_retention_ids": [],
+        "claimant_ids": [],
+        "respondent_ids": [],
+        "claim_basis_summary": "string",
+        "requested_outcomes": [],
+        "claim_amount": {
+          "$ref": "#/shared_schema_fragments/economic_measure_fragment"
+        },
+        "candidate_legal_theories": [
+          "breach_of_contract",
+          "license_breach",
+          "unjust_enrichment",
+          "quantum_meruit",
+          "money_had_and_received",
+          "fiduciary_breach",
+          "trade_secret_misuse",
+          "copyright_related_claim",
+          "other"
+        ],
+        "candidate_remedy_theories": [
+          "license_fee",
+          "restitution",
+          "disgorgement",
+          "constructive_trust",
+          "accounting",
+          "damages",
+          "injunction",
+          "declaratory_relief",
+          "credit_or_attribution",
+          "other"
+        ],
+        "traceability_overview": {
+          "contribution_traceability": "directly_traced|partially_traced|inferentially_reconstructed|mixed|unknown",
+          "classification_traceability": "directly_traced|partially_traced|inferentially_reconstructed|mixed|unknown",
+          "use_traceability": "directly_traced|partially_traced|inferentially_reconstructed|mixed|unknown",
+          "benefit_traceability": "directly_traced|partially_traced|inferentially_reconstructed|mixed|unknown",
+          "retention_traceability": "directly_traced|partially_traced|inferentially_reconstructed|mixed|unknown"
+        },
+        "confidence_overview": {
+          "contribution_confidence": "low|medium|high",
+          "classification_confidence": "low|medium|high",
+          "use_confidence": "low|medium|high",
+          "benefit_confidence": "low|medium|high",
+          "retention_confidence": "low|medium|high",
+          "overall_claim_confidence": "low|medium|high"
+        },
+        "evidence_package_references": [],
+        "negotiation_or_handoff": {
+          "handoff_target": "contracting|negotiation|audit|compliance|internal_review|litigation_prep|claim_assertion|other",
+          "handoff_status": "not_prepared|prepared|sent_for_review|accepted|rejected|returned_for_revision"
+        },
+        "dispute": {
+          "$ref": "#/shared_schema_fragments/dispute_fragment"
+        },
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    }
+  },
+  "supporting_objects": {
+    "output_object_registry": {
+      "description": "Registry of downstream artifacts, products, models, reports, features, or derivative outputs.",
+      "record_schema": {
+        "output_object_id": "string",
+        "output_type": "model|dataset|feature|report|file|api_response|creative_output|product_component|other",
+        "label": "string",
+        "description": "string",
+        "creator_system_id": "string",
+        "related_use_event_ids": [],
+        "lineage": {
+          "$ref": "#/shared_schema_fragments/lineage_fragment"
+        },
+        "commercialization_status": "internal_only|pilot|commercial|licensed|distributed|retired",
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    },
+    "party_registry": {
+      "description": "Registry of originators, custodians, claimants, respondents, operators, or counterparties.",
+      "record_schema": {
+        "party_id": "string",
+        "party_type": "individual|company|team|collective|government|nonprofit|other",
+        "name": "string",
+        "role_tags": [],
+        "contact_reference": "string",
+        "jurisdiction": "string",
+        "created_at": "ISO_8601_timestamp",
+        "updated_at": "ISO_8601_timestamp",
+        "notes": []
+      }
+    }
+  },
+  "processing_pipeline": {
+    "stage_1_contribution": {
+      "operator": "REGISTER",
+      "module_family": "contribution",
+      "inputs": [
+        "raw_contribution_information",
+        "provenance_data",
+        "authorization_data"
+      ],
+      "outputs": [
+        "contribution_record"
+      ]
+    },
+    "stage_2_classification": {
+      "operator": "CLASSIFY",
+      "module_family": "classification",
+      "inputs": [
+        "contribution_record",
+        "classification_logic",
+        "system_or_human_classifier"
+      ],
+      "outputs": [
+        "classification_record"
+      ]
+    },
+    "stage_3_use": {
+      "operator": "TRACE_USE",
+      "module_family": "use",
+      "inputs": [
+        "contribution_record",
+        "classification_record",
+        "system_logs",
+        "job_logs",
+        "query_logs",
+        "model_pipeline_logs"
+      ],
+      "outputs": [
+        "use_record"
+      ]
+    },
+    "stage_4_benefit": {
+      "operator": "REALIZE_BENEFIT",
+      "module_family": "benefit",
+      "inputs": [
+        "use_record",
+        "output_object_record",
+        "revenue_or_value_data"
+      ],
+      "outputs": [
+        "benefit_record"
+      ]
+    },
+    "stage_5_retention": {
+      "operator": "ASSESS_RETENTION",
+      "module_family": "retention",
+      "inputs": [
+        "benefit_record",
+        "payment_or_return_data",
+        "sharing_or_withholding_data"
+      ],
+      "outputs": [
+        "retention_record"
+      ]
+    },
+    "stage_6_claim": {
+      "operator": "FORM_CLAIM",
+      "module_family": "claim",
+      "inputs": [
+        "contribution_record",
+        "classification_record",
+        "use_record",
+        "benefit_record",
+        "retention_record"
+      ],
+      "outputs": [
+        "claim_record"
+      ]
+    }
+  },
+  "legacy_reconstruction_interface": {
+    "description": "Interface for situations where the full chain was not instrumented from the start and must be reconstructed from partial records.",
+    "invariants": [
+      "Legacy reconstruction does not erase missingness; it records it.",
+      "Inferentially reconstructed links must carry confidence metadata.",
+      "Direct traceability and inferential reconstruction may coexist in the same chain."
+    ],
+    "record_schema": {
+      "reconstruction_id": "string",
+      "target_scope": "contribution|classification|use|benefit|retention|claim|multi_stage_chain",
+      "available_direct_records": [],
+      "missing_links": [],
+      "reconstruction_method": "manual_analysis|log_correlation|lineage_estimate|economic_estimate|hybrid|other",
+      "reconstructed_links": [],
+      "confidence_level": "low|medium|high",
+      "limitations": [],
+      "created_at": "ISO_8601_timestamp",
+      "updated_at": "ISO_8601_timestamp",
+      "notes": []
+    }
+  },
+  "integration_notes": [
+    "This version is intentionally aligned to the canonical grammar rather than generic product vocabulary.",
+    "Benefit and retention are explicit separate module families because the problem is not use alone but retained benefit.",
+    "Classification is explicit because contribution does not become operationally usable without typed organization.",
+    "The populist grammar sits above this schema as a translation layer, not as a replacement for it.",
+    "A later legal operator schema should consume claim records rather than reconstructing the entire chain from scratch."
+  ]
+}
+
+
+
+
