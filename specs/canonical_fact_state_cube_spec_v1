@@ -1,0 +1,333 @@
+{
+  "schema_name": "canonical_fact_state_cube_spec",
+  "version": "1.0",
+  "description": "Canonical machine-readable specification for the legal fact-state cube. Separates ontology, state mode, visibility/articulation, and evaluation semantics.",
+
+  "core_principle": {
+    "statement": "Fact types classify world-level reality only. Articulation is not a fact type; it is a visibility-transition property that determines whether an active world-state becomes evaluable."
+  },
+
+  "ontology": {
+    "fact_type_count": 12,
+    "fact_type_groups": {
+      "acts": [
+        {
+          "id": 1,
+          "key": "generative_act",
+          "label": "Generative Act",
+          "class": "act",
+          "definition": "Creates the possibility of a state or relation."
+        },
+        {
+          "id": 2,
+          "key": "transitional_act",
+          "label": "Transitional Act",
+          "class": "act",
+          "definition": "Moves from one state to another."
+        },
+        {
+          "id": 3,
+          "key": "operative_act",
+          "label": "Operative Act",
+          "class": "act",
+          "definition": "Executes or instantiates an effect in the world."
+        }
+      ],
+      "conditions": [
+        {
+          "id": 4,
+          "key": "object_condition",
+          "label": "Object Condition",
+          "class": "condition",
+          "definition": "The existence or configuration of a thing."
+        },
+        {
+          "id": 5,
+          "key": "external_state_condition",
+          "label": "External State Condition",
+          "class": "condition",
+          "definition": "A relation between entities in the world."
+        },
+        {
+          "id": 6,
+          "key": "internal_state_condition",
+          "label": "Internal State Condition",
+          "class": "condition",
+          "definition": "A state internal to an actor."
+        },
+        {
+          "id": 7,
+          "key": "direct_state_condition",
+          "label": "Direct State Condition",
+          "class": "condition",
+          "definition": "A legally relevant alignment or configuration."
+        }
+      ],
+      "intermediate_states": [
+        {
+          "id": 8,
+          "key": "latent_condition",
+          "label": "Latent Condition",
+          "class": "intermediate_state",
+          "definition": "A condition that exists but is not operative at the relevant time."
+        },
+        {
+          "id": 9,
+          "key": "activated_condition",
+          "label": "Activated Condition",
+          "class": "intermediate_state",
+          "definition": "A condition that is operative at the relevant time."
+        }
+      ],
+      "conduct": [
+        {
+          "id": 10,
+          "key": "activity_conduct",
+          "label": "Activity Conduct",
+          "class": "conduct",
+          "definition": "Patterned or repeated behavior across time."
+        },
+        {
+          "id": 11,
+          "key": "transformational_conduct",
+          "label": "Transformational Conduct",
+          "class": "conduct",
+          "definition": "Conduct that produces a meaningful change in state."
+        },
+        {
+          "id": 12,
+          "key": "direct_conduct",
+          "label": "Direct Conduct",
+          "class": "conduct",
+          "definition": "The act itself is legally operative without requiring further transformation."
+        }
+      ]
+    },
+    "constraints": [
+      "Conditions are never wrongful by themselves.",
+      "Acts are procedural and are not automatically conduct.",
+      "Conduct arises only when doctrine evaluates an act as liability-bearing use.",
+      "Articulation is not a fact type and must not be added as a thirteenth fact type."
+    ]
+  },
+
+  "cube_axes": {
+    "z_axis": {
+      "name": "condition_type_by_state_mode",
+      "condition_types": [
+        "object_condition",
+        "external_state_condition",
+        "internal_state_condition",
+        "direct_state_condition"
+      ],
+      "state_modes": [
+        {
+          "key": "latent",
+          "label": "Latent",
+          "world_status": "not_operative",
+          "visibility_status": "pre_operativity",
+          "definition": "Condition exists but is not operative in the world."
+        },
+        {
+          "key": "active0",
+          "label": "Active₀",
+          "world_status": "operative",
+          "visibility_status": "pre_record",
+          "definition": "Condition is operative in the world but not yet stabilized in record."
+        },
+        {
+          "key": "active1",
+          "label": "Active₁",
+          "world_status": "operative",
+          "visibility_status": "record_stabilized",
+          "definition": "Condition is articulated into record and available for legal reasoning."
+        }
+      ],
+      "layer_count": 12,
+      "layer_formula": "4 condition types x 3 state modes"
+    },
+    "y_axis": {
+      "name": "act_type",
+      "values": [
+        "generative_act",
+        "transitional_act",
+        "operative_act"
+      ]
+    },
+    "x_axis": {
+      "name": "conduct_type",
+      "values": [
+        "activity_conduct",
+        "transformational_conduct",
+        "direct_conduct"
+      ]
+    }
+  },
+
+  "visibility_pipeline": {
+    "sequence": [
+      "observed",
+      "perceived",
+      "recorded",
+      "law_entered"
+    ],
+    "symbols": {
+      "observed": "O",
+      "perceived": "P",
+      "recorded": "R",
+      "law_entered": "L"
+    },
+    "articulation_rule": {
+      "statement": "Articulation is the transition by which an active world-state becomes record-stabilized and eligible for legal use.",
+      "maps_active0_to_active1": true,
+      "record_anchor": "R",
+      "law_entry_anchor": "L"
+    }
+  },
+
+  "state_progression": {
+    "world_level_sequence": [
+      "latent",
+      "active0",
+      "active1"
+    ],
+    "formal_rule": "latent -> active0 -> active1",
+    "interpretation": {
+      "latent": "exists but not yet operative",
+      "active0": "operative in the world but not yet relation-stabilized in record",
+      "active1": "operative and articulated sufficiently to support relation inference"
+    }
+  },
+
+  "relation_semantics": {
+    "core_statement": "Obligation does not arise from events alone. It arises from stabilized relations extracted from articulated events.",
+    "active0_meaning": "occurrence without stable relational meaning",
+    "active1_meaning": "occurrence with stabilized relational meaning",
+    "derived_sequence": [
+      "relation_inference",
+      "expectation_derivation",
+      "conduct_expectation_comparison",
+      "breach_classification",
+      "liability_determination"
+    ]
+  },
+
+  "evaluation_semantics": {
+    "structural_availability": {
+      "definition": "All cells exist as possibility space."
+    },
+    "operative_availability": {
+      "definition": "Some paths become live in the world at Active₀."
+    },
+    "evaluative_availability": {
+      "definition": "Only Active₁ states may enter legal reasoning and conduct evaluation."
+    },
+    "conduct_gate_rule": {
+      "statement": "A state must be active in the world and stabilized in record before it can be evaluated as conduct.",
+      "requires_state_mode": "active1"
+    }
+  },
+
+  "articulation_thresholds": {
+    "thresholds": [
+      {
+        "key": "w1_inference_threshold",
+        "label": "W₁",
+        "definition": "Minimum articulation required for inference-based action.",
+        "sufficient_state_mode": "active0",
+        "relation_requirement": "partial_or_unstable_relation"
+      },
+      {
+        "key": "m2_liability_threshold",
+        "label": "M₂",
+        "definition": "Minimum articulation required for stable relational reconstruction and liability evaluation.",
+        "sufficient_state_mode": "active1",
+        "relation_requirement": "stabilized_relation"
+      }
+    ],
+    "ordering_rule": "m2_liability_threshold > w1_inference_threshold"
+  },
+
+  "collapse_points": [
+    {
+      "key": "collapse_1",
+      "transition": "latent_to_active0",
+      "failure_type": "activation_failure",
+      "effect": "nothing happens in the world"
+    },
+    {
+      "key": "collapse_2",
+      "transition": "active0_to_active1",
+      "failure_type": "articulation_failure",
+      "effect": "world effects exist but cannot stabilize into record, relation, expectation, or consequence"
+    }
+  ],
+
+  "information_theoretic_mapping": {
+    "statement": "Articulation functions as sampling over continuous relational reality.",
+    "mapping": {
+      "continuous_signal": "world_relations",
+      "sampling": "articulation",
+      "sub_threshold": "active0",
+      "reconstruction_sufficient": "active1",
+      "aliasing": "distorted_relation_or_misclassification"
+    }
+  },
+
+  "canonical_cell_format": {
+    "full": [
+      "condition_type",
+      "state_mode",
+      "act_type",
+      "conduct_type"
+    ],
+    "compressed_display": {
+      "z_layer_carries": [
+        "condition_type",
+        "state_mode"
+      ],
+      "cell_displays": [
+        "act_type",
+        "conduct_type"
+      ]
+    }
+  },
+
+  "machine_rules": [
+    {
+      "id": "R1",
+      "name": "fact_type_integrity",
+      "rule": "No new fact type may be created for articulation."
+    },
+    {
+      "id": "R2",
+      "name": "state_mode_integrity",
+      "rule": "State mode must be one of: latent, active0, active1."
+    },
+    {
+      "id": "R3",
+      "name": "active0_world_rule",
+      "rule": "active0 indicates world operativity without record stabilization."
+    },
+    {
+      "id": "R4",
+      "name": "active1_record_rule",
+      "rule": "active1 indicates record stabilization sufficient for relation inference."
+    },
+    {
+      "id": "R5",
+      "name": "conduct_evaluation_gate",
+      "rule": "Conduct evaluation is invalid unless state_mode = active1."
+    },
+    {
+      "id": "R6",
+      "name": "warrant_gate",
+      "rule": "Inference-based coercive action may proceed at active0 if W1 threshold is satisfied."
+    },
+    {
+      "id": "R7",
+      "name": "liability_gate",
+      "rule": "Liability evaluation requires active1 and M2 threshold satisfaction."
+    }
+  ]
+}
